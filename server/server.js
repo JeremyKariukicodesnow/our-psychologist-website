@@ -22,8 +22,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/articles', articleRouter);
-app.use('/categories', categoriesRouter);
+app.use('/api/articles', articleRouter);
+app.use('/api/categories', categoriesRouter);
 
 // Start server
 const port = process.env.PORT || 5000;

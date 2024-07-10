@@ -6,7 +6,7 @@ body, html, #root {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0;
+  background-color: rgb(207, 255, 255);
 }
 
 .App {
@@ -39,4 +39,8 @@ body, html, #root {
 }
 
 
-
+@media (prefers-color-scheme: light) {
+  body, html, #root{
+    background-color: peachpuff ;
+  }
+}
