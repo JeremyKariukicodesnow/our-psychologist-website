@@ -24,7 +24,7 @@ const Articles: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <img src="https://i.pinimg.com/564x/ab/1b/48/ab1b482180444b34e588bc39c0d0051c.jpg" alt="" className='w-auto m-auto rounded-sm'/>
+      <img src="https://i.pinimg.com/564x/ab/1b/48/ab1b482180444b34e588bc39c0d0051c.jpg" alt="" className='w-auto m-auto mt-20 rounded-sm'/>
       <h1 className="text-3xl font-bold mb-4">Our Articles</h1>
       <input
         type="text"
