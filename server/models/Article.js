@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Category = require('./Category')
+//const Category = require('./Category')
 
 const ArticleSchema = new mongoose.Schema({
     title: {
@@ -11,22 +11,27 @@ const ArticleSchema = new mongoose.Schema({
         required: true
     },
     body: {
-        type: [
-            {
-                sectionTitle: String,
-                content: String
-            },
-        ],
+        type: String,
         required: true
     },
     conclusion: {
         type: String,
         required: true
     },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-        required: true
+    // category: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Category'
+    // },
+    imageUrl: {
+        type: String
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    author: {
+        type: String,
+        default: 'Anonymous'
     }
 })
 

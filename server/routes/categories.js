@@ -3,7 +3,7 @@ const router = express.Router()
 const Category = require('../models/Category')
 
 //Get all categories
-router.get('/', async (req, res) => {
+router.get('/categories', async (req, res) => {
     try {
         const categories = await Category.find()
         res.json(categories)
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 })
 
 //Create category
-router.post('/', async (req, res) => {
+router.post('/categories', async (req, res) => {
     const category = new Category({
         name: req.body.name
     })
