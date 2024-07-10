@@ -6,11 +6,15 @@ interface NavbarProps {
   isPsychologist: boolean;
 }
 
-const NavBar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
+const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -19,23 +23,23 @@ const NavBar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <Link to="/" className="text-xl font-bold">MyApp</Link>
+              <Link to="/" className="text-xl font-bold" onClick={closeMenu}>MyApp</Link>
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <Link to="/home" className="px-3 py-2 rounded-md text-sm font-medium">Home</Link>
-                <Link to="/about" className="px-3 py-2 rounded-md text-sm font-medium">About</Link>
-                <Link to="/articles" className="px-3 py-2 rounded-md text-sm font-medium">Articles</Link>
-                <Link to="/psychologists" className="px-3 py-2 rounded-md text-sm font-medium">Psychologists</Link>
-                <Link to="/chatbot" className="px-3 py-2 rounded-md text-sm font-medium">Chatbot</Link>
+                <Link to="/home" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Home</Link>
+                <Link to="/about" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>About</Link>
+                <Link to="/articles" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Articles</Link>
+                <Link to="/psychologists" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Psychologists</Link>
+                <Link to="/chatbot" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Chatbot</Link>
                 {!isLoggedIn && (
                   <>
-                    <Link to="/login" className="px-3 py-2 rounded-md text-sm font-medium">Login</Link>
-                    <Link to="/register" className="px-3 py-2 rounded-md text-sm font-medium">Register</Link>
+                    <Link to="/login" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Login</Link>
+                    <Link to="/register" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Register</Link>
                   </>
                 )}
                 {isLoggedIn && isPsychologist && (
-                  <Link to="/write" className="px-3 py-2 rounded-md text-sm font-medium">Write</Link>
+                  <Link to="/articles/new" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Write</Link>
                 )}
               </div>
             </div>
@@ -69,19 +73,19 @@ const NavBar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
 
       <div className={`${isOpen ? 'block' : 'hidden'} md:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium">Home</Link>
-          <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium">About</Link>
-          <Link to="/articles" className="block px-3 py-2 rounded-md text-base font-medium">Articles</Link>
-          <Link to="/psychologists" className="block px-3 py-2 rounded-md text-base font-medium">Psychologists</Link>
-          <Link to="/chatbot" className="block px-3 py-2 rounded-md text-base font-medium">Chatbot</Link>
+          <Link to="/home" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Home</Link>
+          <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>About</Link>
+          <Link to="/articles" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Articles</Link>
+          <Link to="/psychologists" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Psychologists</Link>
+          <Link to="/chatbot" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Chatbot</Link>
           {!isLoggedIn && (
             <>
-              <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium">Login</Link>
-              <Link to="/register" className="block px-3 py-2 rounded-md text-base font-medium">Register</Link>
+              <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Login</Link>
+              <Link to="/register" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Register</Link>
             </>
           )}
           {isLoggedIn && isPsychologist && (
-            <Link to="/write" className="block px-3 py-2 rounded-md text-base font-medium">Write</Link>
+            <Link to="/articles/new" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Write</Link>
           )}
         </div>
       </div>
@@ -89,4 +93,4 @@ const NavBar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
   );
 }
 
-export default NavBar;
+export default Navbar;
