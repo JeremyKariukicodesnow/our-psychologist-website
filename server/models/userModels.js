@@ -23,6 +23,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: './assets/pexels-moose-photos-170195-1037999.jpg'
   },
+  description:{
+    type:String
+  },
   createdAt: {
     type: Date,
     default: Date.now
