@@ -1,30 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+// src/App.tsx
 
-function App() {
-  const [showLanding, setShowLanding] = useState(true);
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { UserProvider } from './contexts/userContext';
+import Register from './loginRegister/register';
+import Login from './loginRegister/login';
+import PsychologistList from './psychologistPage/Psychologists';
+import PsychologistProfile from './singlePsychologist/singlePsychologist';
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowLanding(false);
-    }, 4000); // Adjust the time here (1000ms = 1 second)
+const Home: React.FC = () => (
+  <div>
+    <h1>Welcome to Our Psychologist Website</h1>
+  </div>
+);
 
-    return () => clearTimeout(timer);
-  }, []);
-
+const App: React.FC = () => {
   return (
-    <div className="App">
-      {showLanding && (
-        <div className="landing-page">
-          <div className="landing-text">ZOE AFYA</div>
-        </div>
-      )}
-      <div className="main-content">
-        {/* Your main app content goes here */}
-        Welcome to the main content of the app!
-      </div>
-    </div>
+    <UserProvider>
+      <Router>
+        <Routes>
+         {/*  <Route path="/" element={<Home />} /> */}
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/psychologists" element={<PsychologistList />} />
+          <Route path="/psychologists/:username" element={<PsychologistProfile />} />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
-}
+};
 
 export default App;

@@ -5,23 +5,28 @@ const User = require('../models/userModels');
 
 // Register
 const register = async (req, res) => {
-
-  const { username, email, password, role, profilePic, isApproved: approvedFromBody } = req.body;
+  const { username, email, password, role, description, isApproved: approvedFromBody } = req.body;
+  const profilePic = req.file; // file upload handled by multer
 
   try {
     let user = await User.findOne({ username });
 
     if (user) {
-      console.log('User already exists');
       return res.status(400).json({ msg: 'User already exists' });
     }
 
     // If the role is psychiatrist, ensure they have a non-default profile picture and are approved
     if (role === 'psychiatrist') {
-      if (!profilePic || profilePic === 'path/to/placeholder/image.jpg') {
+      if (!profilePic || profilePic.size === 0) {
+        console.log(`profile pic required for psychologist`)
         return res.status(400).json({ msg: 'Psychiatrists must provide a profile picture' });
       }
+      if (!description) {
+        console.log(`description required for psychologist`)
+        return res.status(400).json({ msg: 'Psychiatrists must provide a description' });
+      }
       if (!approvedFromBody) {
+        console.log('psychologist has to be approved')
         return res.status(400).json({ msg: 'Psychiatrists must be approved to register' });
       }
     }
@@ -29,26 +34,33 @@ const register = async (req, res) => {
     // Set isApproved to false if the role is user
     const isApproved = role === 'psychiatrist' ? approvedFromBody : false;
 
-    // Create new user object
+    // Encrypt the password
+    let hashedPassword;
+    try {
+      hashedPassword = await bcrypt.hash(password, 10);
+    } catch (hashError) {
+      return res.status(500).send('Server error');
+    }
+
+    // Create new user object with hashed password
     user = new User({
       username,
       email,
-      password,
+      password: hashedPassword, // Store hashed password in the database
       role,
-      profilePic,
-      isApproved
+      profilePic: profilePic ? profilePic.buffer : null, // Store profile pic buffer
+      isApproved,
+      description
     });
-
-    // Encrypt the password
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-
+    
+    console.log(user)
     await user.save();
 
     // Create payload for JWT
     const payload = {
       user: {
         id: user.id,
+        username: user.username,
         role: user.role
       }
     };
@@ -93,11 +105,12 @@ const login = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
-
+    con
     // Create payload for JWT
     const payload = {
       user: {
         id: user.id,
+        username: user.username,
         role: user.role
       }
     };
@@ -119,4 +132,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = {login , register}
+module.exports = { login, register };
