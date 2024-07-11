@@ -12,6 +12,7 @@ import Articles from './pages/articles/Articles';
 import SingleArticle from './pages/articles/SingleArticle';
 import ArticleWrite from './pages/articles/ArticleWrite';
 import NavBar from './components/navbar/NavBar';
+import Footer from './components/footer/Footer';
 import './App.css';
 
 const App: React.FC = () => {
@@ -79,10 +80,14 @@ const App: React.FC = () => {
                 <Route path="/psychologists" element={<PsychologistList />} />
                 <Route path="/psychologists/:username" element={<PsychologistProfile />} />
               </Routes>
-            </div>
+              <Footer />
+            </div> 
+            
           )}
         </div>
+       
       </Router>
+      
     </UserProvider>
   );
 };
