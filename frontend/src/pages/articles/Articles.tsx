@@ -27,7 +27,7 @@ const Articles: React.FC = () => {
   );
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 font-poppins">
       <FadeInSection>
         <img
           src="https://i.pinimg.com/564x/ab/1b/48/ab1b482180444b34e588bc39c0d0051c.jpg"

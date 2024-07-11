@@ -54,7 +54,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <form className="auth-form" onSubmit={handleSubmit}>
+    <form className="auth-form font-poppins" onSubmit={handleSubmit}>
       <h1>Login</h1>
       {error && <p className="error">{error}</p>}
       <input

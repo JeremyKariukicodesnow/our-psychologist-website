@@ -3,7 +3,7 @@ import './About.css';
 
 function About() {
   return (
-    <div className='about-container'>
+    <div className='about-container font-poppins'>
       <div className='hero-img'>
         <img
           src="https://blog.darwinbox.com/hubfs/MicrosoftTeams-image%20%282%29-1.png"

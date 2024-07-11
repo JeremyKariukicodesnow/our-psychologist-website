@@ -21,7 +21,7 @@ const PsychologistList: React.FC = () => {
   }, []);
 
   return (
-    <div className="psychologists-container">
+    <div className="psychologists-container font-poppins">
       <h1 className='mt-20'>Psychologists</h1>
       {error && <p className="error-message">{error}</p>}
       <div className="psychologists-grid">
