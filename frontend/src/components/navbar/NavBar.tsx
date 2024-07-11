@@ -22,10 +22,10 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
-            <Link to="/" className="text-xl font-bold" onClick={closeMenu}>zoe afya</Link>
+            <Link to="/" className="text-4xl font-bold" onClick={closeMenu}>zoe afya</Link>
           </div>
           <div className="hidden md:flex justify-center flex-grow">
-            <div className="ml-10 flex items-baseline space-x-4">
+            <div className=" flex items-baseline space-x-4">
               <Link to="/home" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Home</Link>
               <Link to="/about" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>About</Link>
               <Link to="/articles" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Articles</Link>
