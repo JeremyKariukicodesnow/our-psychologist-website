@@ -48,7 +48,7 @@ const register = async (req, res) => {
       email,
       password: hashedPassword, // Store hashed password in the database
       role,
-      profilePic: profilePic ? profilePic.buffer : null, // Store profile pic buffer
+      profilePic:  profilePic ? profilePic.buffer.toString('base64') : null,
       isApproved,
       description
     });

@@ -29,10 +29,10 @@ const PsychologistList: React.FC = () => {
           <div className="psychologist-card" key={psychologist.id}>
             {psychologist.profilePic ? (
               <img 
-                src={`data:image/jpeg;base64,${psychologist.profilePic}`} 
-                alt={`${psychologist.username}'s profile`} 
-                className="profile-image" 
-              />
+              src={`data:image/jpeg;base64,${psychologist.profilePic}`} 
+              alt={`${psychologist.username}'s profile`} 
+              className="profile-image" 
+            />
             ) : (
               <div className="placeholder-img">No Image</div>
             )}
