@@ -18,20 +18,20 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
   };
 
   return (
-    <nav className="bg-blue-600 text-white fixed w-full top-0 z-50">
+    <nav className="bg-purple-300 text-black fixed w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <Link to="/" className="text-xl font-bold" onClick={closeMenu}>MyApp</Link>
+              <Link to="/" className="text-xl font-bold" onClick={closeMenu}>zoe afya</Link>
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 <Link to="/home" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Home</Link>
                 <Link to="/about" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>About</Link>
                 <Link to="/articles" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Articles</Link>
-                <Link to="/psychologists" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Psychologists</Link>
-                <Link to="/chatbot" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Chatbot</Link>
+                {/* <Link to="/psychologists" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Psychologists</Link> */}
+                <Link to="/chatbot" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Safe space</Link>
                 {!isLoggedIn && (
                   <>
                     <Link to="/login" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Login</Link>
