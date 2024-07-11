@@ -33,7 +33,7 @@ const App: React.FC = () => {
         <div className="App">
           {showLanding ? (
             <div className="landing-page">
-              <div className="landing-text">YOU ARE BEAUTIFUL</div>
+              <div className="landing-text">YOU ARE RADIANT</div>
             </div>
           ) : (
             <div>
