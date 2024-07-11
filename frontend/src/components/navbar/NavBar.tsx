@@ -27,19 +27,19 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <Link to="/home" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Home</Link>
-                <Link to="/about" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>About</Link>
-                <Link to="/articles" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Articles</Link>
-                <Link to="/psychologists" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Psychologists</Link>
-                <Link to="/chatbot" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Chatbot</Link>
+                <Link to="/home" className="px-3 py-2 rounded-md text-lg font-medium" onClick={closeMenu}>Home</Link>
+                <Link to="/about" className="px-3 py-2 rounded-md text-lg font-medium" onClick={closeMenu}>About</Link>
+                <Link to="/articles" className="px-3 py-2 rounded-md text-lg font-medium" onClick={closeMenu}>Articles</Link>
+                <Link to="/psychologists" className="px-3 py-2 rounded-md text-lg font-medium" onClick={closeMenu}>Psychologists</Link>
+                <Link to="/chatbot" className="px-3 py-2 rounded-md text-lg font-medium" onClick={closeMenu}>Chatbot</Link>
                 {!isLoggedIn && (
                   <>
-                    <Link to="/login" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Login</Link>
-                    <Link to="/register" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Register</Link>
+                    <Link to="/login" className="px-3 py-2 rounded-md text-lg font-medium" onClick={closeMenu}>Login</Link>
+                    <Link to="/register" className="px-3 py-2 rounded-md text-lg font-medium" onClick={closeMenu}>Register</Link>
                   </>
                 )}
                 {isLoggedIn && isPsychologist && (
-                  <Link to="/articles/new" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Write</Link>
+                  <Link to="/articles/new" className="px-3 py-2 rounded-md text-lg font-medium" onClick={closeMenu}>Write</Link>
                 )}
               </div>
             </div>

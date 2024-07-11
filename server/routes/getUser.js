@@ -3,7 +3,7 @@ const express = require('express');
 const User = require('../models/userModels');
 const router = express.Router();
 
-router.get('/psychologists', async (req, res, next) => {
+router.get('/psychologists', async (req, res) => {
   try {
     const psychologists = await User.find({ role: 'psychiatrist' });
     console.log('Fetch was successful');

@@ -22,7 +22,7 @@ const PsychologistList: React.FC = () => {
 
   return (
     <div className="psychologists-container">
-      <h1>Psychologists</h1>
+      <h1 className='mt-20'>Psychologists</h1>
       {error && <p className="error-message">{error}</p>}
       <div className="psychologists-grid">
         {psychologists.map(psychologist => (
