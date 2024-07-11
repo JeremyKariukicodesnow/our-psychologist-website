@@ -13,6 +13,7 @@ const ArticleWrite: React.FC = () => {
     //categoryId: ''
   });
   const [error, setError] = useState<string | null>(null);
+ 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -62,7 +63,7 @@ const ArticleWrite: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <p className="text-red-500">{error}</p>}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Title</label>
+          <label className="block text-sm font-medium text-gray-700 mt-16">Title</label>
           <input
             name="title"
             placeholder="Title"
@@ -116,17 +117,6 @@ const ArticleWrite: React.FC = () => {
             required
           />
         </div>
-        {/* <div>
-          <label className="block text-sm font-medium text-gray-700">Category ID</label>
-          <input
-            name="categoryId"
-            placeholder="Category ID"
-            value={formData.categoryId}
-            onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            required
-          />
-        </div> */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Upload Image</label>
           <input

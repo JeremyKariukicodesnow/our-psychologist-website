@@ -18,14 +18,39 @@ const App: React.FC = () => {
   const [showLanding, setShowLanding] = useState(true);
   const isLoggedIn = true;
   const isPsychologist = true;
+  const [currentText, setCurrentText] = useState<string[]>([])
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLanding(false);
-    }, 2000); // Adjust the time here (1000ms = 1 second)
+    }, 5000); // Adjust the time here (1000ms = 1 second)
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const words = [
+      'YOUR MENTAL HEALTH,',
+      'YOUR WELL-BEING,',
+      'A PRECIOUS GEM,',
+      'ALWAYS WORTH SEEING.',
+      'TAKE THE TIME,',
+      'GIVE SELF-CARE,',
+      'IN EVERY MOMENT,',
+      'BE AWARE.'
+    ];
+    let index = 0
+    const interval = setInterval(() => {
+      if (index < words.length){
+        setCurrentText((prev) => [...prev,words[index]])
+        index ++
+      } else{
+          clearInterval(interval)
+      }
+    }, 500)
+    return () => clearInterval(interval)
+  }, [])
+
 
   return (
     <UserProvider>
@@ -33,7 +58,9 @@ const App: React.FC = () => {
         <div className="App">
           {showLanding ? (
             <div className="landing-page">
-              <div className="landing-text">YOU ARE BEAUTIFUL</div>
+              <div className="landing-text">{currentText.map((text, i) => (
+                <div key={i}>{text}</div>
+              ))}</div>
             </div>
           ) : (
             <div>
