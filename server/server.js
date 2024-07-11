@@ -24,7 +24,7 @@ app.use(bodyParser.json({ limit: '100mb' }));
 app.use('/api/auth', authRoutes);
 app.use('/api/articles', articleRouter);
 app.use('/api/categories', categoriesRouter);
-app.use('/api/psychology', userRouter);  // Ensure route prefix consistency
+app.use('/psychology', userRouter);  // Ensure route prefix consistency
 
 // Error handling middleware
 app.use((err, req, res, next) => {

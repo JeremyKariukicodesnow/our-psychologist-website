@@ -6,6 +6,7 @@ const API_URL = 'http://localhost:4000/psychology';
 export const fetchPsychologists = async (): Promise<Psychologist[]> => {
   try {
     const response = await axios.get(`${API_URL}/psychologists`);
+    console.log('Fetched psychologists:', response.data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
