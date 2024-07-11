@@ -72,12 +72,12 @@ const SingleArticle: React.FC = () => {
       {isEditing ? (
         <form onSubmit={handleEdit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Title</label>
+            <label className="block text-sm font-medium text-gray-700 mt-20">Title</label>
             <input
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <div>
@@ -149,7 +149,7 @@ const SingleArticle: React.FC = () => {
               className="w-full h-64 object-cover rounded-md shadow-md"
             />
           )}
-          <h1 className="text-3xl font-bold">{article?.title}</h1>
+          <h1 className="text-3xl font-bold mt-20">{article?.title}</h1>
           <p className="text-lg text-gray-700">{article?.introduction}</p>
           <p className="text-gray-700">{article?.body}</p>
           <p className="text-lg text-gray-700">{article?.conclusion}</p>
