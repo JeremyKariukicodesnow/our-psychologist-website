@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const articleRouter = require('./routes/articles');
 const userRouter = require('./routes/getUser');  // Assuming 'getUser' is the correct name
 const categoriesRouter = require('./routes/categories');
+const scheduleRouter = require('./routes/schedule')
 
 dotenv.config();
 
@@ -25,6 +26,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/articles', articleRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/psychology', userRouter);  // Ensure route prefix consistency
+app.use('/api/schedule', scheduleRouter);  // Ensure route prefix consistency
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

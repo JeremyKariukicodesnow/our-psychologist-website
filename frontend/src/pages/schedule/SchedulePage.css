@@ -1,0 +1,116 @@
+/* * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #a2e8f1;
+}
+
+.container {
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.left-panel {
+    background-color: #b2ebf2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+}
+
+.left-panel h2 {
+    font-size: 24px;
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.circle {
+    background-color: #ce93d8;
+    color: white;
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.right-panel {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.month {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.week-names, .days, .dates {
+    display: flex;
+}
+
+.week-names span, .days .day, .dates .week .date {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dddddd;
+    margin: 4px;
+}
+
+.day {
+    background-color: #b2ebf2;
+}
+
+.date {
+    cursor: pointer;
+}
+
+.date.active {
+    background-color: #ce93d8;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form .label {
+    margin: 10px 0 5px;
+}
+
+.form .input {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    width: 200px;
+}
+  */
