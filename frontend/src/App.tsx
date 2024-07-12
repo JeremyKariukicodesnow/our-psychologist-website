@@ -13,6 +13,7 @@ import SingleArticle from './pages/articles/SingleArticle';
 import ArticleWrite from './pages/articles/ArticleWrite';
 import NavBar from './components/navbar/NavBar';
 import Footer from './components/footer/Footer';
+import Chatbotpage from './pages/chatbot/Chatbotpage';
 import './App.css';
 
 const App: React.FC = () => {
@@ -71,6 +72,7 @@ const App: React.FC = () => {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/articles" element={<Articles />} />
+                <Route path="/chatbot" element={<Chatbotpage />} />
                 <Route path="/articles/:id" element={<SingleArticle />} />
                 {isLoggedIn && isPsychologist && (
                   <Route path="/articles/new" element={<ArticleWrite />} />
