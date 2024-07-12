@@ -16,7 +16,6 @@ import NavBar from './components/navbar/NavBar';
 import SchedulePage from './pages/schedule/Schedule';
 import SafeSpace from './components/moodCheck/SafeSpace';
 import AppointmentsPage from './pages/schedule/Appointments';
-=======
 import Footer from './components/footer/Footer';
 
 import './App.css';
