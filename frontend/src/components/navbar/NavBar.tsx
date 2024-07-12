@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useUser } from '../../contexts/userContext';
 
-interface NavbarProps {
-  isLoggedIn: boolean;
-  isPsychologist: boolean;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
+const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isLoggedIn, isPsychologist, logout } = useUser();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -25,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
             <Link to="/" className="text-4xl font-bold" onClick={closeMenu}>zoe afya</Link>
           </div>
           <div className="hidden md:flex justify-center flex-grow">
-            <div className=" flex items-baseline space-x-4">
+            <div className="flex items-baseline space-x-4">
               <Link to="/home" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Home</Link>
               <Link to="/about" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>About</Link>
               <Link to="/articles" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Articles</Link>
@@ -36,13 +33,17 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
           <div className="hidden md:flex items-center space-x-4">
             {!isLoggedIn ? (
               <>
-                <Link to="/login" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Login</Link>
-                <Link to="/register" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Register</Link>
+                <Link to="/login" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Login/Register</Link>
+                <Link to="/login" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Profile</Link>
               </>
             ) : (
-              isPsychologist && (
-                <Link to="/articles/new" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Write</Link>
-              )
+              <>
+                {isPsychologist && (
+                  <Link to="/articles/new" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Write</Link>
+                )}
+                <Link to="/profile" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Profile</Link>
+                <button onClick={logout} className="px-3 py-2 rounded-md text-sm font-medium">Logout</button>
+              </>
             )}
           </div>
           <div className="-mr-2 flex md:hidden">
@@ -72,26 +73,31 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, isPsychologist }) => {
         </div>
       </div>
 
-      <div className={`${isOpen ? 'block' : 'hidden'} md:hidden`}>
+      <div className={`${isOpen ? 'block' : 'hidden'} md:hidden bg-purple-300`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <Link to="/home" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Home</Link>
           <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>About</Link>
           <Link to="/articles" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Articles</Link>
           <Link to="/psychologists" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Psychologists</Link>
           <Link to="/chatbot" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Safe space</Link>
-          {!isLoggedIn && (
+          {!isLoggedIn ? (
             <>
               <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Login</Link>
               <Link to="/register" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Register</Link>
             </>
-          )}
-          {isLoggedIn && isPsychologist && (
-            <Link to="/articles/new" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Write</Link>
+          ) : (
+            <>
+              {isPsychologist && (
+                <Link to="/articles/new" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Write</Link>
+              )}
+              <Link to="/profile" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Profile</Link>
+              <button onClick={logout} className="block px-3 py-2 rounded-md text-base font-medium">Logout</button>
+            </>
           )}
         </div>
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

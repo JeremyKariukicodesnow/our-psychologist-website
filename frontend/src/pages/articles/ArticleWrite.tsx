@@ -1,24 +1,25 @@
+// src/components/ArticleWrite.tsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useUser } from '../../contexts/userContext';
 
 const ArticleWrite: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useUser();
   const [formData, setFormData] = useState({
     title: '',
     introduction: '',
     body: '',
     conclusion: '',
-    author: '',
+    author: user?.username || '',
     imageUrl: '',
-    //categoryId: ''
   });
   const [error, setError] = useState<string | null>(null);
- 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -29,7 +30,7 @@ const ArticleWrite: React.FC = () => {
       reader.onloadend = () => {
         setFormData({
           ...formData,
-          imageUrl: reader.result as string
+          imageUrl: reader.result as string,
         });
       };
       reader.readAsDataURL(file);
@@ -42,9 +43,9 @@ const ArticleWrite: React.FC = () => {
       const response = await fetch('http://localhost:4000/api/articles/articles', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
       if (response.ok) {
         navigate('/articles');
@@ -115,6 +116,7 @@ const ArticleWrite: React.FC = () => {
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
+            disabled
           />
         </div>
         <div>
@@ -131,7 +133,9 @@ const ArticleWrite: React.FC = () => {
         >
           Create Article
         </button>
-        <button><Link to='/articles'  className="mt-4 inline-block px-4 py-2 bg-gray-600 text-white rounded-md shadow hover:bg-gray-700 transition-colors duration-200 ml-6">All Articles</Link></button>
+        <Link to="/articles" className="mt-4 inline-block px-4 py-2 bg-gray-600 text-white rounded-md shadow hover:bg-gray-700 transition-colors duration-200 ml-6">
+          All Articles
+        </Link>
       </form>
     </div>
   );

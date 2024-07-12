@@ -3,10 +3,16 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModels');
 
+// Utility function to parse buffer to Base64
+const parseBufferToBase64 = (buffer, mimeType) => {
+  const raw = buffer.toString('base64');
+  return `data:${mimeType};base64,${raw}`;
+};
+
 // Register
 const register = async (req, res) => {
   const { username, email, password, role, description, isApproved: approvedFromBody } = req.body;
-  const profilePic = req.file; // file upload handled by multer
+  const profilePic = req.file;
 
   try {
     let user = await User.findOne({ username });
@@ -15,48 +21,36 @@ const register = async (req, res) => {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
-    // If the role is psychiatrist, ensure they have a non-default profile picture and are approved
     if (role === 'psychiatrist') {
       if (!profilePic || profilePic.size === 0) {
-        console.log(`profile pic required for psychologist`)
         return res.status(400).json({ msg: 'Psychiatrists must provide a profile picture' });
       }
       if (!description) {
-        console.log(`description required for psychologist`)
         return res.status(400).json({ msg: 'Psychiatrists must provide a description' });
       }
       if (!approvedFromBody) {
-        console.log('psychologist has to be approved')
         return res.status(400).json({ msg: 'Psychiatrists must be approved to register' });
       }
     }
 
-    // Set isApproved to false if the role is user
     const isApproved = role === 'psychiatrist' ? approvedFromBody : false;
 
-    // Encrypt the password
-    let hashedPassword;
-    try {
-      hashedPassword = await bcrypt.hash(password, 10);
-    } catch (hashError) {
-      return res.status(500).send('Server error');
-    }
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user object with hashed password
+    const profilePicData = profilePic ? parseBufferToBase64(profilePic.buffer, profilePic.mimetype) : null;
+
     user = new User({
       username,
       email,
-      password: hashedPassword, // Store hashed password in the database
+      password: hashedPassword,
       role,
-      profilePic:  profilePic ? profilePic.buffer.toString('base64') : null,
+      profilePic: profilePicData,
       isApproved,
       description
     });
-    
-    console.log(user)
+
     await user.save();
 
-    // Create payload for JWT
     const payload = {
       user: {
         id: user.id,
@@ -65,7 +59,6 @@ const register = async (req, res) => {
       }
     };
 
-    // Sign and return the JWT
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
@@ -105,8 +98,7 @@ const login = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
-    con
-    // Create payload for JWT
+
     const payload = {
       user: {
         id: user.id,
@@ -115,7 +107,6 @@ const login = async (req, res) => {
       }
     };
 
-    // Sign and return the JWT
     jwt.sign(
       payload,
       process.env.JWT_SECRET,

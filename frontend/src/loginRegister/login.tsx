@@ -1,8 +1,8 @@
-// src/components/Login.tsx
-
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useUser } from '../contexts/userContext';
+import { useUser } from '../contexts/userContext'; // Make sure the import path is correct
+import { Link, useNavigate } from 'react-router-dom';
+import  {jwtDecode, JwtPayload } from 'jwt-decode'; // Corrected import statement
 import './Auth.css';
 
 interface LoginFormData {
@@ -11,7 +11,17 @@ interface LoginFormData {
   password: string;
 }
 
+interface DecodedJwtPayload extends JwtPayload {
+  user: {
+    id: string;
+    username: string;
+    email: string;
+    role: string;
+  };
+}
+
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
     username: '',
@@ -36,14 +46,21 @@ const Login: React.FC = () => {
     try {
       const response = await axios.post('http://localhost:4000/api/auth/login', formData);
       const { token } = response.data;
+      const decoded = jwtDecode<DecodedJwtPayload>(token);
       const userPayload = {
-        username: formData.username,
-        email: formData.email,
+        username: decoded.user.username,
+        email: decoded.user.email,
         token,
-        role: 'user', // or retrieve from response if available
+        role: decoded.user.role, // Retrieve from decoded token
       };
       setUser(userPayload);
       localStorage.setItem('user', JSON.stringify(userPayload));
+      
+      console.log('User Role:', userPayload.role); // Log user role here
+
+      if (token) {
+        navigate('/home');
+      }
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.msg) {
         setError(error.response.data.msg);
@@ -82,6 +99,10 @@ const Login: React.FC = () => {
         required
       />
       <button type="submit">Login</button>
+      <div>
+        <p>Don't have an account...</p>
+        <Link to="/register">Register</Link>
+      </div>
     </form>
   );
 };
