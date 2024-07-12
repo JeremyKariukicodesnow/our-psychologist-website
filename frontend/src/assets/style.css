@@ -1,0 +1,38 @@
+.header {
+    background-color:#BCB6FF;
+    padding: 1em;
+    width: 100%;
+}
+
+.h1 {
+    font-size: 2em;
+    font-family: poppins;
+    font-weight: bold;
+}
+
+
+.service-card {
+    margin-inline: 2em;
+    padding: 1em;
+    justify-content: center;
+    background-color: #94FBAB;
+    border: 0.05em solid;
+    border-radius: 2em;
+    overflow: hidden;
+    max-width: 25em;
+    min-width:fit-content;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+
+.card-image {
+    border-radius: 1.8em;
+    width: 25em;
+    height: 20em;
+}
+
+.card-title {
+    font-size: 2em;
+    font-weight:500;
+}

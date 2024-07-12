@@ -1,4 +1,3 @@
-import React from 'react'
 
 function Articles() {
   return (
@@ -6,4 +5,4 @@ function Articles() {
   )
 }
 
-export default Articles
+export default Articles;
