@@ -19,7 +19,7 @@ import SafeSpace from './components/moodCheck/SafeSpace';
 import AppointmentsPage from './pages/schedule/Appointments';
 import Footer from './components/footer/Footer';
 import Profile from './loginRegister/Profile'
-
+import Chatbotpage from './pages/chatbot/Chatbotpage';
 import './App.css';
 
 const App: React.FC = () => {
@@ -77,6 +77,7 @@ const App: React.FC = () => {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/articles" element={<Articles />} />
+                <Route path="/chatbot" element={<Chatbotpage />} />
                 <Route path="/articles/:id" element={<SingleArticle />} />
                 <Route path="/schedule" element={<SchedulePage />} />
                 <Route path="/safe-space" element={<SafeSpace />} />
