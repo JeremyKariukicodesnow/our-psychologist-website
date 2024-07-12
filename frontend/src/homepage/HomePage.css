@@ -1,0 +1,13 @@
+/* Homepage.css */
+
+.quote-container {
+    height: 6rem; /* Adjust the height as needed */
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .quote-slider {
+    display: flex;
+    transition: transform 1s ease-in-out;
+  }
+  

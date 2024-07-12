@@ -12,7 +12,13 @@ import Articles from './pages/articles/Articles';
 import SingleArticle from './pages/articles/SingleArticle';
 import ArticleWrite from './pages/articles/ArticleWrite';
 import NavBar from './components/navbar/NavBar';
+
+import SchedulePage from './pages/schedule/Schedule';
+import SafeSpace from './components/moodCheck/SafeSpace';
+import AppointmentsPage from './pages/schedule/Appointments';
+=======
 import Footer from './components/footer/Footer';
+
 import './App.css';
 
 const App: React.FC = () => {
@@ -72,6 +78,9 @@ const App: React.FC = () => {
                 <Route path="/about" element={<About />} />
                 <Route path="/articles" element={<Articles />} />
                 <Route path="/articles/:id" element={<SingleArticle />} />
+                <Route path="/schedule" element={<SchedulePage />} />
+                <Route path="/safe-space" element={<SafeSpace />} />
+                <Route path="/appointments" element={<AppointmentsPage />} />
                 {isLoggedIn && isPsychologist && (
                   <Route path="/articles/new" element={<ArticleWrite />} />
                 )}
@@ -79,6 +88,7 @@ const App: React.FC = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/psychologists" element={<PsychologistList />} />
                 <Route path="/psychologists/:username" element={<PsychologistProfile />} />
+
               </Routes>
               <Footer />
             </div> 
