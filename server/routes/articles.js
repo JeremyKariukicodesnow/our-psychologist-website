@@ -26,15 +26,6 @@ router.get('/articles', async (req, res) => {
         res.status(500).json({ message: 'Could not find articles' })
     }
 })
-// //Get articles by category
-// router.get('/category/:categoryId', async (req, res) => {
-//     try {
-//         const articles = await Article.find({ category: req.params.categoryId })
-//         res.json(articles)
-//     } catch (err) {
-//         res.status(500).json({ message: 'Could not find articles' })
-//     }
-// })
 
 //Get one article
 router.get('/articles/:id', getArticle, (req, res) => {
@@ -45,10 +36,7 @@ router.get('/articles/:id', getArticle, (req, res) => {
 router.post('/articles', async (req, res) => {
     console.log('Request body:', req.body) // Add this line for logging
     try {
-        // const category = await Category.findById(req.body.categoryId)
-        // if (!category) {
-        //     return res.status(400).json({ message: 'No such category at the moment' })
-        // }
+
         const article = new Article({
             title: req.body.title,
             introduction: req.body.introduction,
@@ -99,7 +87,7 @@ router.put('/articles/:id', getArticle, async (req, res) => {
 //delete
 router.delete('/articles/:id', getArticle, async (req, res) => {
     try {
-        await res.article.delete()
+        await res.article.deleteOne()
         res.status(200).json({ message: 'Article deleted successfully' })
     } catch (err) {
         res.status(500).json({ message: 'Could not delete article' })
