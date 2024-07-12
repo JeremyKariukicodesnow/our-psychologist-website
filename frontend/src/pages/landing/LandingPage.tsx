@@ -2,13 +2,6 @@ import React from 'react'
 import Header from '../../components/Header';
 import "./landing.css"
 import Card from '../../components/cards';
-
-import heroImage from '../../assets/images/hero-image.jpg';
-import serviceImageCouple from'../../assets/images/service-image-couples.jpg';
-import serviceImageIndividual from'../../assets/images/service-image-individual.jpg';
-import serviceImageMedication from '../../assets/images/service-image-medication.png';
-import serviceImageTeens from'../../assets/images/service-image-teens.jpg';
-
 import { testimonials } from '../../components/TestimonialsData';
 
 function LandingPage() {
@@ -18,7 +11,7 @@ function LandingPage() {
       <Header />
       <main className="main-content">
         <section className="hero--section">
-           <img src={heroImage} alt="blue flower" className="hero--image" />
+           <img src='../../assets/images/hero-image.jpg' alt="blue flower" className="hero--image" />
            <p className="hero--text">A sound mind is a peaceful mind</p>
         </section>
 
@@ -26,19 +19,19 @@ function LandingPage() {
 
     <section className="cards--section">
       <Card 
-      imgUrl={serviceImageTeens} altText="Smiling teen" 
+      imgUrl='../../assets/images/service-image-teens.jpg' altText="Smiling teen" 
       imgTitle="Teens"
       />
       <Card 
-      imgUrl={serviceImageCouple} altText="Couple holding hands" 
+      imgUrl='../../assets/images/service-image-couples.jpg' altText="Couple holding hands" 
       imgTitle="Couples"
       />
       <Card 
-      imgUrl={serviceImageIndividual} altText="A person standing"
+      imgUrl='../../assets/images/service-image-individual.jpg' altText="A person standing"
       imgTitle="Individuals"
       />
       <Card 
-      imgUrl={serviceImageMedication} altText="A girl appearing to take medication"
+      imgUrl='../../assets/images/service-image-medication.png' altText="A girl appearing to take medication"
       imgTitle="Medication"
       />
     </section>
