@@ -20,11 +20,10 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   profilePic: {
-    type: Buffer,
-    default: './assets/pexels-moose-photos-170195-1037999.jpg'
+    type: String, // Store the base64 image data as a string
   },
-  description:{
-    type:String
+  description: {
+    type: String
   },
   createdAt: {
     type: Date,

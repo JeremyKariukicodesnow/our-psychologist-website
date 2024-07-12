@@ -4,6 +4,8 @@ import { Psychologist } from './psychologyInterface';
 import { Link } from 'react-router-dom';
 import './PsychologistList1.css';
 
+const placeholderImage = 'data:image/svg+xml;base64,...'; // Your base64-encoded placeholder image
+
 const PsychologistList: React.FC = () => {
   const [psychologists, setPsychologists] = useState<Psychologist[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +23,7 @@ const PsychologistList: React.FC = () => {
   }, []);
 
   return (
-    <div className="psychologists-container font-poppins">
+    <div className="psychologists-container">
       <h1 className='mt-20'>Psychologists</h1>
       {error && <p className="error-message">{error}</p>}
       <div className="psychologists-grid">
@@ -29,10 +31,13 @@ const PsychologistList: React.FC = () => {
           <div className="psychologist-card" key={psychologist.id}>
             {psychologist.profilePic ? (
               <img 
-              src={`data:image/jpeg;base64,${psychologist.profilePic}`} 
-              alt={`${psychologist.username}'s profile`} 
-              className="profile-image" 
-            />
+                src={psychologist.profilePic} 
+                alt={`${psychologist.username}'s profile`} 
+                className="profile-image"
+                onError={(e) => {
+                  e.currentTarget.src = placeholderImage;
+                }}
+              />
             ) : (
               <div className="placeholder-img">No Image</div>
             )}

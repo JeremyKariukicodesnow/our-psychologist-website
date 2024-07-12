@@ -1,61 +1,126 @@
+/* General form styling */
 .auth-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
   max-width: 400px;
-  margin: auto;
+  margin: 0 auto;
+  margin-top: 50px;
+  font-family: 'Poppins', sans-serif;
 }
 
+/* Form title styling */
 .auth-form h1 {
   margin-bottom: 20px;
-  font-size: 24px;
-  color: #333;
+  font-size: 28px;
+  color: #333333;
 }
 
+/* Input fields and select box styling */
 .auth-form input,
 .auth-form select,
 .auth-form textarea {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  border: 1px solid #dddddd;
   border-radius: 5px;
   box-sizing: border-box;
+  font-size: 16px;
 }
 
 .auth-form textarea {
-  height: 150px;
+  height: 100px;
   resize: vertical;
 }
 
+/* Submit button styling */
 .auth-form button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background-color: #007bff;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
 .auth-form button:hover {
   background-color: #0056b3;
 }
 
+/* Error message styling */
 .auth-form .error {
   color: red;
   margin-bottom: 20px;
+  font-size: 14px;
 }
 
+/* Profile picture preview styling */
 .profile-preview {
   width: 100px;
   height: 100px;
   object-fit: cover;
   border-radius: 50%;
   margin-bottom: 10px;
+}
+
+/* Login/Register link styling */
+.auth-form div {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.auth-form div a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.auth-form div a:hover {
+  color: #0056b3;
+}
+
+/* Responsive styling */
+@media (max-width: 480px) {
+  .auth-form {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  .auth-form h1 {
+    font-size: 24px;
+  }
+
+  .auth-form input,
+  .auth-form select,
+  .auth-form textarea,
+  .auth-form button {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .auth-form button {
+    font-size: 14px;
+  }
+}
+
+/* Center the form on the page */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+}
+
+body {
+  padding: 20px;
 }

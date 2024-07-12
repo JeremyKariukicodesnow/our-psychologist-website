@@ -32,6 +32,19 @@ router.get('/articles/:id', getArticle, (req, res) => {
     res.json(res.article).status(200)
 })
 
+// Get articles by author
+router.get('/articles/author/:username', async (req, res) => {
+    console.log(`Fetching articles for author: ${req.params.username}`); // Log the username
+    try {
+        const articles = await Article.find({ author: req.params.username });
+        res.json(articles).status(200);
+    } catch (err) {
+        console.error('Error fetching articles:', err); // Log the error
+        res.status(500).json({ message: 'Could not find articles' });
+    }
+});
+
+
 //Create an article
 router.post('/articles', async (req, res) => {
     console.log('Request body:', req.body) // Add this line for logging

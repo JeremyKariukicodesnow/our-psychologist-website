@@ -1,3 +1,5 @@
+// src/App.tsx
+
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserProvider } from './contexts/userContext';
@@ -16,14 +18,13 @@ import SchedulePage from './pages/schedule/Schedule';
 import SafeSpace from './components/moodCheck/SafeSpace';
 import AppointmentsPage from './pages/schedule/Appointments';
 import Footer from './components/footer/Footer';
+import Profile from './loginRegister/Profile'
 
 import './App.css';
 
 const App: React.FC = () => {
   const [showLanding, setShowLanding] = useState(true);
-  const isLoggedIn = true;
-  const isPsychologist = true;
-  const [currentText, setCurrentText] = useState<string[]>([])
+  const [currentText, setCurrentText] = useState<string[]>([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -44,18 +45,17 @@ const App: React.FC = () => {
       'IN EVERY MOMENT,',
       'BE AWARE.'
     ];
-    let index = 0
+    let index = 0;
     const interval = setInterval(() => {
-      if (index < words.length){
-        setCurrentText((prev) => [...prev,words[index]])
-        index ++
-      } else{
-          clearInterval(interval)
+      if (index < words.length) {
+        setCurrentText((prev) => [...prev, words[index]]);
+        index++;
+      } else {
+        clearInterval(interval);
       }
-    }, 500)
-    return () => clearInterval(interval)
-  }, [])
-
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <UserProvider>
@@ -63,13 +63,15 @@ const App: React.FC = () => {
         <div className="App">
           {showLanding ? (
             <div className="landing-page">
-              <div className="landing-text">{currentText.map((text, i) => (
-                <div key={i}>{text}</div>
-              ))}</div>
+              <div className="landing-text">
+                {currentText.map((text, i) => (
+                  <div key={i}>{text}</div>
+                ))}
+              </div>
             </div>
           ) : (
             <div>
-              <NavBar isLoggedIn={isLoggedIn} isPsychologist={isPsychologist} />
+              <NavBar />
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/home" element={<HomePage />} />
@@ -79,23 +81,18 @@ const App: React.FC = () => {
                 <Route path="/schedule" element={<SchedulePage />} />
                 <Route path="/safe-space" element={<SafeSpace />} />
                 <Route path="/appointments" element={<AppointmentsPage />} />
-                {isLoggedIn && isPsychologist && (
-                  <Route path="/articles/new" element={<ArticleWrite />} />
-                )}
+                <Route path="/articles/new" element={<ArticleWrite />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/psychologists" element={<PsychologistList />} />
                 <Route path="/psychologists/:username" element={<PsychologistProfile />} />
-
               </Routes>
               <Footer />
-            </div> 
-            
+            </div>
           )}
         </div>
-       
       </Router>
-      
     </UserProvider>
   );
 };

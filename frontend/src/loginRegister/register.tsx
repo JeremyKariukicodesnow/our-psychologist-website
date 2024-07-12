@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate , Link } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../contexts/userContext';
 import './Auth.css';
@@ -15,6 +16,7 @@ interface RegisterFormData {
 }
 
 const Register: React.FC = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState<RegisterFormData>({
     username: '',
     email: '',
@@ -93,6 +95,9 @@ const Register: React.FC = () => {
       const userPayload = { username: formData.username, email: formData.email, role: formData.role, token };
       setUser(userPayload);
       localStorage.setItem('user', JSON.stringify(userPayload));
+      if(token){
+        navigate('/login')
+      }
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.msg) {
         setError(error.response.data.msg);
@@ -171,6 +176,10 @@ const Register: React.FC = () => {
         </>
       )}
       <button type="submit">Register</button>
+      <div>
+        <p>Want to login...</p>
+        <Link to="/login">login</Link>
+      </div>
     </form>
   );
 };
