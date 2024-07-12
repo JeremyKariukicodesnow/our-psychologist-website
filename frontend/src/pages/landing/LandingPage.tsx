@@ -13,6 +13,7 @@ import { testimonials } from '../../components/TestimonialsData';
 
 function LandingPage() {
   return (
+    
     <div className="landing--page">
       <Header />
       <main className="main-content">
