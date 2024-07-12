@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Article } from '../../types/Articles';
 import { useInView } from 'react-intersection-observer';
-
+import { motion } from 'framer-motion';
+import './Article.css';
 
 const Articles: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -28,34 +29,41 @@ const Articles: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 font-poppins">
-      <FadeInSection>
-        <img
-          src="https://i.pinimg.com/564x/ab/1b/48/ab1b482180444b34e588bc39c0d0051c.jpg"
-          alt=""
-          className='w-auto m-auto mt-20 rounded-sm'
-        />
-      </FadeInSection>
-      <h1 className="text-3xl font-bold mb-4">Our Articles</h1>
+      <motion.img
+        src="https://i.pinimg.com/564x/ab/1b/48/ab1b482180444b34e588bc39c0d0051c.jpg"
+        alt="Mental Health Image"
+        className="w-auto m-auto mt-20 rounded-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      />
+      <h1 className="text-3xl font-bold mb-4 text-blue-700">Our Articles</h1>
       <input
         type="text"
         placeholder="Search by title"
         value={searchTerm}
         onChange={handleSearchChange}
-        className="mb-4 p-2 border border-gray-300 rounded-md w-full"
+        className="mb-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+        aria-label="Search articles by title"
       />
       <ul className="space-y-4">
         {filteredArticles.length > 0 ? (
           filteredArticles.map(article => (
             <FadeInSection key={article._id}>
-              <li className="bg-white rounded-md shadow-md p-4">
+              <motion.li
+                className="bg-teal-200 rounded-md shadow-md p-4 hover:shadow-lg transition-shadow duration-200"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
                 <Link
                   to={`/articles/${article._id}`}
                   className="text-2xl font-bold text-blue-600 hover:underline"
                 >
                   {article.title}
                 </Link>
-                <p className="text-gray-700">{article.introduction}</p>
-              </li>
+                <p className="text-gray-700 mt-2">{article.introduction}</p>
+              </motion.li>
             </FadeInSection>
           ))
         ) : (
@@ -68,6 +76,7 @@ const Articles: React.FC = () => {
       >
         Write an Article
       </Link>
+      <BackToTopButton />
     </div>
   );
 };
@@ -79,16 +88,61 @@ const FadeInSection: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   });
 
   return (
-    <div
+    <motion.div
       ref={ref}
       className={`transform transition-opacity duration-700 ease-in-out ${
-        inView ? 'opacity-100' : 'opacity-0 translate-y-10'
+        inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+      transition={{ duration: 0.5 }}
     >
       {children}
+    </motion.div>
+  );
+};
+
+const BackToTopButton: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    if (window.pageYOffset > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', toggleVisibility);
+    return () => {
+      window.removeEventListener('scroll', toggleVisibility);
+    };
+  }, []);
+
+  return (
+    <div className="fixed bottom-8 left-4">
+      {isVisible && (
+        <motion.button
+          onClick={scrollToTop}
+          className="bg-blue-400 text-white p-2 rounded-full shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          aria-label="Scroll to top"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          ↑
+        </motion.button>
+      )}
     </div>
   );
 };
 
 export default Articles;
-
