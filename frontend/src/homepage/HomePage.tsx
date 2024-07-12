@@ -24,7 +24,7 @@ const HomePage:React.FC = () => {
 
   return (
     <div className="min-h-screen bg-green-100">
-      <header className="text-center py-6 shadow-lg">
+      <header className="text-center py-6 ">
         <h1 className="text-3xl font-bold text-black mt-16">Welcome to Zoe Afya</h1>
       </header>
 
@@ -36,7 +36,7 @@ const HomePage:React.FC = () => {
               <Link to='/safe-space' className="text-xl font-semibold text-gray-700">Safe space</Link>
             </div>
             <div className="w-1/2 p-6 bg-blue-200 rounded-lg shadow-md ml-2 transform transition duration-300 hover:scale-105">
-              <h3 className="text-lg font-semibold text-gray-700">Scheduled Therapy</h3>
+              <Link to='/schedule' className="text-lg font-semibold text-gray-700">Scheduled Therapy</Link>
             </div>
           </div>
         </section>
