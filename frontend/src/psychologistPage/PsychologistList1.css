@@ -6,6 +6,10 @@
   flex-direction: column;
   align-items: center;
 }
+.email{
+  font-weight: bold;
+  color: #333;
+}
 
 .psychologists-container h1 {
   text-align: center;

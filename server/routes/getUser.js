@@ -29,4 +29,19 @@ router.get('/psychologist/:username', async (req, res, next) => {
   }
 });
 
+router.delete('/psychologist/:username', async (req, res) => {
+  try {
+    const result = await User.findOneAndDelete({ username: req.params.username});
+    if (!result) {
+      return res.status(404).json({ msg: 'Psychologist not found' });
+    }
+    // Optional: Delete related articles if needed
+    // await Article.deleteMany({ author: req.params.username });
+    res.json({ msg: 'Psychologist deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting psychologist:', error);
+    res.status(500).send(`Server error: ${error.message}`);
+  }
+});
+
 module.exports = router;

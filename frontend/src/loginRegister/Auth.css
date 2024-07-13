@@ -18,6 +18,7 @@
   margin-bottom: 20px;
   font-size: 28px;
   color: #333333;
+  text-align: center;
 }
 
 /* Input fields and select box styling */
@@ -31,6 +32,14 @@
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.auth-form input:focus,
+.auth-form select:focus,
+.auth-form textarea:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
 .auth-form textarea {
@@ -60,6 +69,7 @@
   color: red;
   margin-bottom: 20px;
   font-size: 14px;
+  text-align: center;
 }
 
 /* Profile picture preview styling */
@@ -69,12 +79,18 @@
   object-fit: cover;
   border-radius: 50%;
   margin-bottom: 10px;
+  border: 2px solid #007bff;
 }
 
 /* Login/Register link styling */
 .auth-form div {
   margin-top: 20px;
   font-size: 14px;
+}
+
+.auth-form div p {
+  margin: 0;
+  text-align: center;
 }
 
 .auth-form div a {
@@ -85,6 +101,54 @@
 
 .auth-form div a:hover {
   color: #0056b3;
+}
+
+/* Terms popup styling */
+.terms-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.terms-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.terms-content h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333333;
+}
+
+.terms-content p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #666666;
+}
+
+.terms-content button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.terms-content button:hover {
+  background-color: #0056b3;
 }
 
 /* Responsive styling */
@@ -107,6 +171,19 @@
   }
 
   .auth-form button {
+    font-size: 14px;
+  }
+
+  .terms-content {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  .terms-content h2 {
+    font-size: 20px;
+  }
+
+  .terms-content p {
     font-size: 14px;
   }
 }

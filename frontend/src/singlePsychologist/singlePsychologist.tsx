@@ -1,26 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchPsychologistByUsername } from '../psychologistPage/fetch';
-import { Psychologist } from '../psychologistPage/psychologyInterface';
+import axios from 'axios';
 import './PsychologistOne.css';
+import { fetchPsychologistByUsername } from '../psychologistPage/fetch'; // Import fetchPsychologistByUsername here
+
+interface Article {
+  _id: string;
+  title: string;
+  introduction: string;
+}
+
+interface Psychologist {
+  username: string;
+  profilePic: string;
+  description: string;
+  email: string;
+}
 
 const PsychologistProfile: React.FC = () => {
-  const { username } = useParams<{ username: string }>();
+  const { username } = useParams<{ username?: string }>(); // Make username optional
   const [psychologist, setPsychologist] = useState<Psychologist | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    const getPsychologist = async () => {
+    const fetchPsychologistAndArticles = async () => {
       try {
-        if (username) {
-          const data = await fetchPsychologistByUsername(username);
-          setPsychologist(data);
+        if (username) { // Check if username is defined
+          // Fetch psychologist profile
+          const psychologistData = await fetchPsychologistByUsername(username); // Use fetchPsychologistByUsername
+          setPsychologist(psychologistData);
+
+          // Fetch articles by this psychologist
+          const articlesData = await axios.get(`http://localhost:4000/api/articles/articles/author/${username}`);
+          setArticles(articlesData.data);
         }
       } catch (error) {
-        setError('Failed to fetch psychologist profile');
+        console.error('Error fetching psychologist profile or articles:', error);
+        setError('Failed to fetch psychologist profile or articles');
       }
     };
-    getPsychologist();
+
+    fetchPsychologistAndArticles();
   }, [username]);
 
   if (!psychologist) {
@@ -34,9 +55,29 @@ const PsychologistProfile: React.FC = () => {
       <div className="profile-details">
         <img src={psychologist.profilePic} alt={`${psychologist.username}'s profile`} />
         <p>{psychologist.description}</p>
+        <p className="email">{psychologist.email}</p>
         <Link to="/psychologists">
           <button>Back to Psychologists</button>
         </Link>
+      </div>
+
+      {/* Display articles by this psychologist */}
+      <div className="psychologist-articles">
+        <h2>Articles by {psychologist.username}</h2>
+        {articles.length > 0 ? (
+          <ul className="article-list">
+            {articles.map((article) => (
+              <li key={article._id} className="article-item">
+                <Link to={`/articles/${article._id}`} className="article-title">
+                  {article.title}
+                </Link>
+                <p className="article-intro">{article.introduction}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No articles found by {psychologist.username}</p>
+        )}
       </div>
     </div>
   );
