@@ -61,7 +61,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (profile && profile.role !== 'psychiatrist') {
-      alert('Users are not visible for privacy reasons.');
+      alert('Users are not visible for privacy reasons.Psychologist amy wait as the page loads');
     }
   }, [profile]);
 
@@ -201,7 +201,7 @@ const Profile: React.FC = () => {
         )
       ) : (
         <button onClick={() => alert('Users are not visible for privacy reasons')} className="button-alert">
-          Alert: Feature in Development
+          loading for psychologist...users feature in beta version
         </button>
       )}
     </div>
