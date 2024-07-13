@@ -94,3 +94,7 @@ body, html, #root {
     background-color: peachpuff ;
   }
 }
+
+.container {
+  background-color: rgb(128, 221, 160,0.6);
+}

@@ -21,27 +21,42 @@ const SoundButton = styled.button`
 export const CalmingVisualSounds:React.FC = () => {
 
     const [sound , setSound] = useState<HTMLAudioElement | null>(null)
+    const [currentSoundUrl, setCurrentSoundUrl] = useState<string | null>(null)
 
     const playSound = (url: string) => {
         if (sound) {
+          if (currentSoundUrl === url){
+            if (sound.paused){
+              sound.play()
+            } else {
+              sound.pause()
+            }
+          } else {
             sound.pause()
+            const newSound = new Audio(url)
+            newSound.play()
+            setSound(newSound)
+            setCurrentSoundUrl(url)
+          }
+        }else{
+          const newSound = new Audio(url)
+          newSound.play()
+          setSound(newSound)
+          setCurrentSoundUrl(url)
         }
-        const newSound = new Audio(url)
-        newSound.play()
-        setSound(newSound)
-    }
+      }
 
   return (
     <Container>
         <h2>Calming Visuals and Sounds</h2>
         <Visual controls>
-        <source src="path/to/calming-video.mp4" type="video/mp4" />
+        <source src="Keep Holding On - Avril Lavigne (Lyrics) .mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </Visual>
       <div>
-        <SoundButton onClick={() => playSound('path/to/nature-sound.mp3')}>Nature Sounds</SoundButton>
-        <SoundButton onClick={() => playSound('path/to/white-noise.mp3')}>White Noise</SoundButton>
-        <SoundButton onClick={() => playSound('path/to/soft-music.mp3')}>Soft Music</SoundButton>
+        <SoundButton onClick={() => playSound('Rachel Platten - Fight Song (Lyrics).mp3')}>Nature Sounds</SoundButton>
+        <SoundButton onClick={() => playSound('Sia - The Greatest (Lyrics).mp3')}>White Noise</SoundButton>
+        <SoundButton onClick={() => playSound('The Script - Hall Of Fame (Lyrics).mp3')}>Soft Music</SoundButton>
       </div>
     </Container>
   )

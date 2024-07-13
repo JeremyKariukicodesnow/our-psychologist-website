@@ -8,14 +8,18 @@ import './Article.css';
 const Articles: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchArticles = async () => {
+      try{
       const response = await fetch('http://localhost:4000/api/articles/articles');
       const data: Article[] = await response.json();
       setArticles(data);
-    };
-
+    } catch(error){
+      setError('Error fetching articles');
+    }
+  }
     fetchArticles();
   }, []);
 
