@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../contexts/userContext';
 import { Link } from 'react-router-dom';
-import './Profile.css'; // Import plain CSS file
+import './Profile.css';
 
 interface User {
   username: string;
@@ -99,19 +99,21 @@ const Profile: React.FC = () => {
     }
   };
 
-  const defaultProfilePic = 'https://via.placeholder.com/150'; // Default image URL
-
-  if (!profile) return <p>Loading...</p>;
+  const defaultProfilePic = 'https://via.placeholder.com/150';
 
   return (
     <div className="profile-container">
       <div className="profile-header">
-        <img
-          src={profile.profilePic || defaultProfilePic}
-          alt={profile.username}
-          className="profile-image"
-          onError={(e) => (e.currentTarget.src = defaultProfilePic)} // Fallback to default image on error
-        />
+        {profile ? (
+          <img
+            src={profile.profilePic || defaultProfilePic}
+            alt={profile.username}
+            className="profile-image"
+            onError={(e) => (e.currentTarget.src = defaultProfilePic)}
+          />
+        ) : (
+          <div className="skeleton-circle skeleton-img"></div>
+        )}
         <div className="profile-details">
           {isEditing ? (
             <>
@@ -149,7 +151,7 @@ const Profile: React.FC = () => {
                 Cancel
               </button>
             </>
-          ) : (
+          ) : profile ? (
             <>
               <h1 className="profile-name">{profile.username}</h1>
               <p className="profile-email">{profile.email}</p>
@@ -165,10 +167,12 @@ const Profile: React.FC = () => {
                 </button>
               )}
             </>
+          ) : (
+            <div className="skeleton-text"></div>
           )}
         </div>
       </div>
-      {profile.role === 'psychiatrist' ? (
+      {profile?.role === 'psychiatrist' ? (
         articles.length > 0 ? (
           <div className="article-list">
             <h2 className="article-list-title">Articles by {profile.username}</h2>
@@ -188,7 +192,11 @@ const Profile: React.FC = () => {
           </div>
         ) : (
           <div className="article-list">
-            <p className="no-articles">No articles available</p>
+            <div className="skeleton-text"></div>
+            <div className="skeleton-text"></div>
+            <div className="skeleton-text"></div>
+            <div className="skeleton-text"></div>
+            <div className="skeleton-text"></div>
           </div>
         )
       ) : (

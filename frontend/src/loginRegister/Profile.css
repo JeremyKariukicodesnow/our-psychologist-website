@@ -114,3 +114,46 @@
 .no-articles {
   color: #666;
 }
+
+/* Skeleton Loading Styles */
+.skeleton {
+  display: inline-block;
+  height: 1rem;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  animation: skeleton-loading 1.5s infinite linear;
+}
+
+.skeleton-text {
+  width: 100%;
+  max-width: 500px;
+  height: 1.5rem;
+  margin-top: 0.5rem;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  animation: skeleton-loading 1.5s infinite linear;
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+  height: 128px;
+  width: 128px;
+  background-color: #e0e0e0;
+  animation: skeleton-loading 1.5s infinite linear;
+}
+
+.skeleton-img {
+  margin-bottom: 1rem;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #c0c0c0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}

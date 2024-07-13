@@ -22,6 +22,7 @@ const PsychologistProfile: React.FC = () => {
   const [psychologist, setPsychologist] = useState<Psychologist | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPsychologistAndArticles = async () => {
@@ -38,11 +39,32 @@ const PsychologistProfile: React.FC = () => {
       } catch (error) {
         console.error('Error fetching psychologist profile or articles:', error);
         setError('Failed to fetch psychologist profile or articles');
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPsychologistAndArticles();
   }, [username]);
+
+  if (loading) {
+    return (
+      <div className="profile-container">
+        <div className="profile-details skeleton-card">
+          <div className="skeleton skeleton-circle"></div>
+          <div className="skeleton skeleton-text"></div>
+          <div className="skeleton skeleton-text"></div>
+          <div className="skeleton skeleton-button"></div>
+        </div>
+        <div className="psychologist-articles">
+          <h2 className="skeleton skeleton-text"></h2>
+          <div className="skeleton skeleton-article"></div>
+          <div className="skeleton skeleton-article"></div>
+          <div className="skeleton skeleton-article"></div>
+        </div>
+      </div>
+    );
+  }
 
   if (!psychologist) {
     return <div className="loading">Loading...</div>;
