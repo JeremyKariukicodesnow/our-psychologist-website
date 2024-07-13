@@ -16,7 +16,7 @@ export const fetchPsychologists = async (): Promise<Psychologist[]> => {
     } else {
       console.error('Unknown error fetching psychologists:', error);
     }
-    throw error; // Re-throwing the error to propagate it further
+    throw error;
   }
 };
 
@@ -32,6 +32,6 @@ export const fetchPsychologistByUsername = async (username: string): Promise<Psy
     } else {
       console.error(`Unknown error fetching psychologist (${username}):`, error);
     }
-    throw error; // Re-throwing the error to propagate it further
+    throw error;
   }
 };

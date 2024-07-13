@@ -2,18 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Article } from '../../types/Articles';
 import { useInView } from 'react-intersection-observer';
+import { useUser } from '../../contexts/userContext';
 import { motion } from 'framer-motion';
 import './Article.css';
 
 const Articles: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const { isPsychologist } = useUser();
 
   useEffect(() => {
     const fetchArticles = async () => {
-      const response = await fetch('http://localhost:4000/api/articles/articles');
-      const data: Article[] = await response.json();
-      setArticles(data);
+      try {
+        const response = await fetch('http://localhost:4000/api/articles/articles');
+        if (!response.ok) {
+          throw new Error('Failed to fetch articles');
+        }
+        const data: Article[] = await response.json();
+        setArticles(data);
+      } catch (err: any) {  // Use 'any' to catch all types of errors
+        setError(err.message);
+      }
     };
 
     fetchArticles();
@@ -29,6 +39,14 @@ const Articles: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 font-poppins">
+      <FadeInSection>
+        <img
+          src="https://i.pinimg.com/564x/ab/1b/48/ab1b482180444b34e588bc39c0d0051c.jpg"
+          alt="Blue flower"
+          className="w-auto m-auto mt-20 rounded-sm"
+        />
+      </FadeInSection>
+      <h1 className="text-3xl font-bold mb-4">Our Articles</h1>
       <motion.img
         src="https://i.pinimg.com/564x/ab/1b/48/ab1b482180444b34e588bc39c0d0051c.jpg"
         alt="Mental Health Image"
@@ -46,6 +64,37 @@ const Articles: React.FC = () => {
         className="mb-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
         aria-label="Search articles by title"
       />
+      {error ? (
+        <div className="text-red-500 text-center">{error}</div>
+      ) : (
+        <ul className="space-y-4">
+          {filteredArticles.length > 0 ? (
+            filteredArticles.map(article => (
+              <FadeInSection key={article._id}>
+                <li className="bg-white rounded-md shadow-md p-4">
+                  <Link
+                    to={`/articles/${article._id}`}
+                    className="text-2xl font-bold text-blue-600 hover:underline"
+                  >
+                    {article.title}
+                  </Link>
+                  <p className="text-gray-700">{article.introduction}</p>
+                </li>
+              </FadeInSection>
+            ))
+          ) : (
+            <li className="text-center text-gray-500">No articles found</li>
+          )}
+        </ul>
+      )}
+      {isPsychologist && (
+        <Link
+          to="/articles/new"
+          className="fixed bottom-16 right-8 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200 z-50"
+        >
+          Write an Article
+        </Link>
+      )}
       <ul className="space-y-4">
         {filteredArticles.length > 0 ? (
           filteredArticles.map(article => (

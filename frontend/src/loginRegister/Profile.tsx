@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../contexts/userContext';
 import { Link } from 'react-router-dom';
-import './Profile.css';
+import './Profile.css'; // Import plain CSS file
 
 interface User {
   username: string;
   email: string;
   role: string;
-  profilePic: string;
+  profilePic: string | null;
   description?: string;
 }
 
@@ -46,8 +46,7 @@ const Profile: React.FC = () => {
           });
 
           if (data.role === 'psychiatrist') {
-            const articlesResponse = await fetch(`http://localhost:4000/api/articles/articles/author/${user.username}
-`);
+            const articlesResponse = await fetch(`http://localhost:4000/api/articles/articles/author/${user.username}`);
             const articlesData: Article[] = await articlesResponse.json();
             setArticles(articlesData);
           }
@@ -59,6 +58,12 @@ const Profile: React.FC = () => {
       fetchProfile();
     }
   }, [user]);
+
+  useEffect(() => {
+    if (profile && profile.role !== 'psychiatrist') {
+      alert('Users are not visible for privacy reasons.');
+    }
+  }, [profile]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -75,9 +80,18 @@ const Profile: React.FC = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+            description: formData.description,
+          }),
         });
-        setProfile({ ...profile!, ...formData });
+        setProfile({
+          ...profile!,
+          username: formData.username,
+          email: formData.email,
+          description: formData.description,
+        });
         setIsEditing(false);
       } catch (error) {
         console.error('Error updating profile:', error);
@@ -90,15 +104,15 @@ const Profile: React.FC = () => {
   if (!profile) return <p>Loading...</p>;
 
   return (
-    <div className="container">
-      <div className="profileHeader">
+    <div className="profile-container">
+      <div className="profile-header">
         <img
           src={profile.profilePic || defaultProfilePic}
           alt={profile.username}
-          className="profileImage"
+          className="profile-image"
           onError={(e) => (e.currentTarget.src = defaultProfilePic)} // Fallback to default image on error
         />
-        <div className="profileDetails">
+        <div className="profile-details">
           {isEditing ? (
             <>
               <input
@@ -106,48 +120,46 @@ const Profile: React.FC = () => {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="inputField"
-                disabled
+                className="input-field"
               />
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="inputField"
-                disabled
+                className="input-field"
               />
               <textarea
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
-                className="textareaField"
+                className="textarea-field"
                 placeholder="Add a description"
               />
               <button
                 onClick={handleUpdate}
-                className="button buttonUpdate"
+                className="button-update"
               >
                 Update
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="button buttonCancel"
+                className="button-cancel"
               >
                 Cancel
               </button>
             </>
           ) : (
             <>
-              <h1 className="profileName">{profile.username}</h1>
-              <p className="profileEmail">{profile.email}</p>
+              <h1 className="profile-name">{profile.username}</h1>
+              <p className="profile-email">{profile.email}</p>
               {profile.role === 'psychiatrist' && profile.description && (
-                <p className="profileDescription">{profile.description}</p>
+                <p className="profile-description">{profile.description}</p>
               )}
               {profile.role === 'psychiatrist' && (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="button buttonEdit"
+                  className="button-edit"
                 >
                   Edit Profile
                 </button>
@@ -156,29 +168,33 @@ const Profile: React.FC = () => {
           )}
         </div>
       </div>
-      {profile.role === 'psychiatrist' && articles.length > 0 ? (
-        <div className="articleList">
-          <h2 className="articleListTitle">Articles by {profile.username}</h2>
-          <ul className="articleItems">
-            {articles.map(article => (
-              <li key={article._id} className="articleItem">
-                <Link
-                  to={`/articles/${article._id}`}
-                  className="articleTitle"
-                >
-                  {article.title}
-                </Link>
-                <p className="articleIntroduction">{article.introduction}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        profile.role === 'psychiatrist' && (
-          <div className="articleList">
-            <p className="noArticles">No articles available</p>
+      {profile.role === 'psychiatrist' ? (
+        articles.length > 0 ? (
+          <div className="article-list">
+            <h2 className="article-list-title">Articles by {profile.username}</h2>
+            <ul className="article-items">
+              {articles.map(article => (
+                <li key={article._id} className="article-item">
+                  <Link
+                    to={`/articles/${article._id}`}
+                    className="article-title"
+                  >
+                    {article.title}
+                  </Link>
+                  <p className="article-introduction">{article.introduction}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="article-list">
+            <p className="no-articles">No articles available</p>
           </div>
         )
+      ) : (
+        <button onClick={() => alert('Users are not visible for privacy reasons')} className="button-alert">
+          Alert: Feature in Development
+        </button>
       )}
     </div>
   );

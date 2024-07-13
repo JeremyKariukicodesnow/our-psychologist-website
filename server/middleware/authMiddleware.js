@@ -11,7 +11,7 @@ const parseBufferToBase64 = (buffer, mimeType) => {
 
 // Register
 const register = async (req, res) => {
-  const { username, email, password, role, description, isApproved: approvedFromBody } = req.body;
+  const { username, email, password, role, description, testCode } = req.body;
   const profilePic = req.file;
 
   try {
@@ -28,12 +28,12 @@ const register = async (req, res) => {
       if (!description) {
         return res.status(400).json({ msg: 'Psychiatrists must provide a description' });
       }
-      if (!approvedFromBody) {
-        return res.status(400).json({ msg: 'Psychiatrists must be approved to register' });
+      if (testCode !== process.env.PSYCHIATRIST_TEST_CODE) {
+        return res.status(400).json({ msg: 'Invalid test code' });
       }
     }
 
-    const isApproved = role === 'psychiatrist' ? approvedFromBody : false;
+    const isApproved = role === 'psychiatrist' ? true : false;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 

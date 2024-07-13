@@ -1,85 +1,125 @@
-/* src/components/PsychologistProfile.css */
-
 .profile-container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.email {
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.profile-details img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.profile-details p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.profile-details button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-details button:hover {
+  background-color: #0056b3;
+}
+
+.psychologist-articles {
+  margin-top: 20px;
+}
+
+.psychologist-articles h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.article-list {
+  list-style: none;
+  padding: 0;
+}
+
+.article-item {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.article-title {
+  font-size: 1.2rem;
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.article-title:hover {
+  color: #0056b3;
+}
+
+.article-intro {
+  margin-top: 8px;
+  color: #555;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .profile-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2rem;
-    color: #333;
-    animation: fadeIn 1s ease-in-out;
+  to {
+    opacity: 1;
   }
-  
-  .error-message {
-    color: red;
-    text-align: center;
-    animation: fadeIn 1s ease-in-out;
-  }
-  
+}
+
+@media (max-width: 600px) {
   .profile-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    animation: fadeIn 1s ease-in-out;
+    padding: 15px;
   }
-  
-  .profile-details img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 20px;
-  }
-  
+
   .profile-details p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 20px;
-    text-align: center;
+    font-size: 0.9rem;
   }
-  
+
   .profile-details button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 8px 15px;
   }
-  
-  .profile-details button:hover {
-    background-color: #0056b3;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .profile-details {
-      padding: 15px;
-    }
-  
-    .profile-details p {
-      font-size: 0.9rem;
-    }
-  
-    .profile-details button {
-      padding: 8px 15px;
-    }
-  }
-  
+}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate , Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../contexts/userContext';
 import './Auth.css';
@@ -12,36 +12,32 @@ interface RegisterFormData {
   role: string;
   profilePic: File | null;
   description: string;
-  isApproved: boolean;
+  testCode: string;
 }
 
 const Register: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterFormData>({
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'user', // default role
+    role: 'user',
     profilePic: null,
     description: '',
-    isApproved: false,
+    testCode: '',
   });
 
   const [error, setError] = useState<string | null>(null);
   const [profilePicPreview, setProfilePicPreview] = useState<string | null>(null);
+  const [showTerms, setShowTerms] = useState<boolean>(false);
   const { setUser } = useUser();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
-    if (type === 'checkbox' && e.target instanceof HTMLInputElement) {
-      setFormData({
-        ...formData,
-        [name]: e.target.checked,
-      });
-    } else if (type === 'file' && e.target instanceof HTMLInputElement) {
+    if (type === 'file' && e.target instanceof HTMLInputElement) {
       const file = e.target.files ? e.target.files[0] : null;
       setFormData({
         ...formData,
@@ -63,19 +59,25 @@ const Register: React.FC = () => {
     setError(null);
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      const errorMsg = 'Passwords do not match';
+      setError(errorMsg);
+      window.alert(errorMsg);
       return;
     }
 
     if (formData.role === 'psychiatrist') {
       const wordCount = formData.description.trim().split(/\s+/).length;
       if (wordCount < 50) {
-        setError('Description must be at least 50 words');
+        const errorMsg = 'Description must be at least 50 words';
+        setError(errorMsg);
+        window.alert(errorMsg);
         return;
       }
 
-      if (!formData.isApproved) {
-        setError('Psychiatrists must be approved to register');
+      if (!formData.testCode) {
+        const errorMsg = 'You must enter the code sent to you after passing the test';
+        setError(errorMsg);
+        window.alert(errorMsg);
         return;
       }
     }
@@ -95,92 +97,118 @@ const Register: React.FC = () => {
       const userPayload = { username: formData.username, email: formData.email, role: formData.role, token };
       setUser(userPayload);
       localStorage.setItem('user', JSON.stringify(userPayload));
-      if(token){
-        navigate('/login')
+      if (token) {
+        navigate('/login');
       }
     } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.msg) {
-        setError(error.response.data.msg);
-      } else {
-        setError('Error registering user');
-      }
+      const errorMsg = error.response && error.response.data && error.response.data.msg
+        ? error.response.data.msg
+        : 'Error registering user';
+      setError(errorMsg);
+      window.alert(errorMsg);
     }
   };
 
+  const handleTermsAccept = () => {
+    setShowTerms(false);
+    window.open('https://zoe-afya-test.zapier.app/', '_blank');
+  };
+
   return (
-    <form className="auth-form" onSubmit={handleSubmit} encType='multipart/form-data'>
-      <h1>Register</h1>
-      {error && <p className="error">{error}</p>}
-      <input
-        type="text"
-        name="username"
-        placeholder="Username"
-        value={formData.username}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={formData.password}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="password"
-        name="confirmPassword"
-        placeholder="Confirm Password"
-        value={formData.confirmPassword}
-        onChange={handleChange}
-        required
-      />
-      <select name="role" value={formData.role} onChange={handleChange}>
-        <option value="user">User</option>
-        <option value="psychiatrist">Psychiatrist</option>
-      </select>
-      {formData.role === 'psychiatrist' && (
-        <>
-          <input
-            type="file"
-            name="profilePic"
-            accept="image/*"
-            onChange={handleChange}
-            required
-          />
-          {profilePicPreview && <img src={profilePicPreview} alt="Profile Preview" className="profile-preview" />}
-          <textarea
-            name="description"
-            placeholder="Description (minimum 50 words)"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-          <label>
-            <input
-              type="checkbox"
-              name="isApproved"
-              checked={formData.isApproved}
-              onChange={handleChange}
-            />
-            Approved
-          </label>
-        </>
+    <div>
+      {showTerms && (
+        <div className="terms-popup">
+          <div className="terms-content">
+            <h2>Terms for Psychiatrists</h2>
+            <ol>
+              <li>After filling your details you will be redirected to another page/tab to take your test.</li>
+              <li>Do not close this current tab/page.</li>
+              <li>Passing the test does not automatically mean you are approved.</li>
+              <li>Once approval is done, an email will be sent to you containing the login code.</li>
+              <li>Put in the code in the code input field you see below.</li>
+            </ol>
+            <button onClick={handleTermsAccept}>OK</button>
+          </div>
+        </div>
       )}
-      <button type="submit">Register</button>
-      <div>
-        <p>Want to login...</p>
-        <Link to="/login">login</Link>
-      </div>
-    </form>
+      <form className="auth-form" onSubmit={handleSubmit} encType='multipart/form-data'>
+        <h1>Register</h1>
+        {error && <p className="error">{error}</p>}
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+        />
+        <select name="role" value={formData.role} onChange={(e) => {
+          handleChange(e);
+          if (e.target.value === 'psychiatrist') {
+            setShowTerms(true);
+          }
+        }}>
+          <option value="user">User</option>
+          <option value="psychiatrist">Psychiatrist</option>
+        </select>
+        {formData.role === 'psychiatrist' && (
+          <>
+            <input
+              type="file"
+              name="profilePic"
+              accept="image/*"
+              onChange={handleChange}
+              required
+            />
+            {profilePicPreview && <img src={profilePicPreview} alt="Profile Preview" className="profile-preview" />}
+            <textarea
+              name="description"
+              placeholder="Description (minimum 50 words)"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="testCode"
+              placeholder="Enter Test Code"
+              value={formData.testCode}
+              onChange={handleChange}
+              required
+            />
+          </>
+        )}
+        <button type="submit" disabled={formData.role === 'psychiatrist' && !formData.testCode}>Register</button>
+        <div>
+          <p>Want to login...</p>
+          <Link to="/login">login</Link>
+        </div>
+      </form>
+    </div>
   );
 };
 

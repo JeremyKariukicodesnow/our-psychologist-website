@@ -1,127 +1,116 @@
-/* Profile.css */
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 1rem;
-  background-color: #ffffff; /* Ensure contrast with body background */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 2rem;
+  background-color: #ffffff;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 2rem; /* Move the container slightly lower */
 }
 
-.profileHeader {
+.profile-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  margin-bottom: 2rem; /* Space below the profile header */
 }
 
-.profileImage {
+.profile-image {
   width: 128px;
   height: 128px;
   border-radius: 50%;
   object-fit: cover;
+  margin-bottom: 1rem;
 }
 
-.profileDetails {
-  margin-left: 1rem;
-}
-
-.inputField, .textareaField {
-  display: block;
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
+}
+
+.input-field,
+.textarea-field {
+  width: 100%;
+  max-width: 500px; /* Increase max-width for larger text areas */
   margin-top: 0.5rem;
   border: 1px solid #d1d5db;
   border-radius: 0.375rem;
-  padding: 0.5rem;
+  padding: 0.75rem; /* Increase padding for more space */
 }
 
-.button {
-  padding: 0.5rem 1rem;
+.textarea-field {
+  min-height: 150px; /* Increase minimum height for better text visibility */
+}
+
+.button-update,
+.button-cancel,
+.button-edit {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem; /* Increase padding for better button size */
+  border: none;
   border-radius: 0.375rem;
-  font-weight: 600;
-  text-align: center;
+  color: #ffffff;
   cursor: pointer;
 }
 
-.buttonUpdate {
-  background-color: #10b981;
-  color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.button-update {
+  background-color: #4caf50; /* Green */
 }
 
-.buttonUpdate:hover {
-  background-color: #059669;
+.button-cancel {
+  background-color: #f44336; /* Red */
 }
 
-.buttonCancel {
-  background-color: #4b5563;
-  color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.button-edit {
+  background-color: #2196f3; /* Blue */
 }
 
-.buttonCancel:hover {
-  background-color: #374151;
+.profile-name,
+.profile-email,
+.profile-description {
+  text-align: center;
+  margin: 0.5rem 0;
 }
 
-.profileName {
-  font-size: 1.875rem;
-  font-weight: 700;
+.article-list {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 2rem; /* Add space above the article list */
 }
 
-.profileEmail {
-  color: #6b7280;
-}
-
-.profileDescription {
-  margin-top: 0.5rem;
-}
-
-.buttonEdit {
-  background-color: #3b82f6;
-  color: white;
-}
-
-.buttonEdit:hover {
-  background-color: #2563eb;
-}
-
-.articleList {
-  margin-top: 1rem;
-}
-
-.articleListTitle {
-  font-size: 1.5rem;
-  font-weight: 700;
+.article-list-title {
   margin-bottom: 0.5rem;
 }
 
-.articleItems {
+.article-items {
   list-style-type: none;
   padding: 0;
 }
 
-.articleItem {
-  background: white;
-  border-radius: 0.375rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  margin-bottom: 0.5rem;
+.article-item {
+  margin-bottom: 1rem;
 }
 
-.articleTitle {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #3b82f6;
+.article-title {
+  font-weight: bold;
+  color: #2196f3; /* Blue */
   text-decoration: none;
 }
 
-.articleTitle:hover {
+.article-title:hover {
   text-decoration: underline;
 }
 
-.articleIntroduction {
-  color: #4b5563;
-  margin-top: 0.5rem;
+.article-introduction {
+  color: #666;
 }
 
-.noArticles {
-  color: #4b5563;
+.no-articles {
+  color: #666;
 }
