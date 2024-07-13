@@ -123,7 +123,7 @@ const ChatbotPage: React.FC = () => {
         <div className="mt-auto flex items-center">
           <textarea
             className="flex-grow p-2 border border-gray-300 rounded-l-lg shadow-md resize-none text-lg"
-            rows={2}
+            rows={3} /* Adjusted rows to 3 for slightly larger size */
             placeholder="Type your message here..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
