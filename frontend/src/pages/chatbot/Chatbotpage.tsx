@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { FaRegComments, FaArrowUp } from 'react-icons/fa';
+import { BASE_URL } from '../../constants/url';
 
 interface Conversation {
   id: number;
@@ -40,7 +41,7 @@ const ChatbotPage: React.FC = () => {
       setError(null);
 
       try {
-        const response = await axios.post('http://localhost:4000/api/chat/chat', { message: userMessage.text });
+        const response = await axios.post(`${BASE_URL}/api/chat/chat`, { message: userMessage.text });
         const botMessage: Message = {
           id: chatHistory.length + 2,
           text: response.data.response,

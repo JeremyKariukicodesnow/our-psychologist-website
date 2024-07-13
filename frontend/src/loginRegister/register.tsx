@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../contexts/userContext';
 import './Auth.css';
+import { BASE_URL } from '../constants/url';
 
 interface RegisterFormData {
   username: string;
@@ -90,7 +91,7 @@ const Register: React.FC = () => {
         }
       }
 
-      const response = await axios.post('http://localhost:4000/api/auth/register', formDataToSubmit, {
+      const response = await axios.post(`${BASE_URL}/api/auth/register`, formDataToSubmit, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       const { token } = response.data;

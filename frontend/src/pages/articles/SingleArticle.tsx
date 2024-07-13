@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Article } from '../../types/Articles';
 import { useUser } from '../../contexts/userContext';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../../constants/url';
 
 const SingleArticle: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -22,7 +23,7 @@ const SingleArticle: React.FC = () => {
 
   useEffect(() => {
     const fetchArticle = async () => {
-      const response = await fetch(`http://localhost:4000/api/articles/articles/${id}`);
+      const response = await fetch(`${BASE_URL}/api/articles/articles/${id}`);
       const data: Article = await response.json();
       setArticle(data);
       setFormData({
@@ -40,7 +41,7 @@ const SingleArticle: React.FC = () => {
   const handleDelete = async () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this article?');
     if (confirmDelete) {
-      await fetch(`http://localhost:4000/api/articles/articles/${id}`, {
+      await fetch(`${BASE_URL}/api/articles/articles/${id}`, {
         method: 'DELETE',
       });
       navigate('/articles');
@@ -55,7 +56,7 @@ const SingleArticle: React.FC = () => {
   };
 
   const handleUpdate = async () => {
-    await fetch(`http://localhost:4000/api/articles/articles/${id}`, {
+    await fetch(`${BASE_URL}/api/articles/articles/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
