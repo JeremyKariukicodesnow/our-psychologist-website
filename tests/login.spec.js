@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from 'playwright/test';
 
 test('User can login successfully', async ({ page }) => {
     await page.goto('http://localhost:3000/#/login'); // Replace with your actual login page URL
@@ -12,7 +12,7 @@ test('User can login successfully', async ({ page }) => {
     await page.click('button[type=submit]');
 
     // Wait for navigation or any asynchronous operations
-    await page.waitForNavigation();
+    await page.waitForURL();
 
     // Assert that user is redirected to the home page or another expected page
     const url = page.url();
