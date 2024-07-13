@@ -55,11 +55,24 @@ const ChatbotPage: React.FC = () => {
     }
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSend();
+    }
+  };
+
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [chatHistory]);
+
+  const handleNewChat = () => {
+    setCurrentConversation(null);
+    setChatHistory([]);
+    setError(null);
+  };
 
   return (
     <div className="flex h-screen font-poppins" role="main">
@@ -79,6 +92,13 @@ const ChatbotPage: React.FC = () => {
             </li>
           ))}
         </ul>
+        <button
+          className="mt-4 w-full bg-blue-500 text-white p-2 rounded text-lg"
+          onClick={handleNewChat}
+          aria-label="Start a new chat"
+        >
+          New Chat
+        </button>
       </aside>
       <main className="flex-1 p-4 flex flex-col">
         <div
@@ -107,6 +127,7 @@ const ChatbotPage: React.FC = () => {
             placeholder="Type your message here..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
             aria-label="Type your message here"
           />
           <button
