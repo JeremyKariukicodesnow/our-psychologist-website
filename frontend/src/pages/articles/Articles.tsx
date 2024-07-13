@@ -121,7 +121,7 @@ const BackToTopButton: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
+    if (window.scrollY > 300) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -143,7 +143,7 @@ const BackToTopButton: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-8 left-4">
+    <div className="fixed bottom-20 left-4">
       {isVisible && (
         <motion.button
           onClick={scrollToTop}
