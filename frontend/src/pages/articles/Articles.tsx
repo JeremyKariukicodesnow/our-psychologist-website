@@ -21,7 +21,7 @@ const Articles: React.FC = () => {
         }
         const data: Article[] = await response.json();
         setArticles(data);
-      } catch (err: any) {  // Use 'any' to catch all types of errors
+      } catch (err: any) {
         setError(err.message);
       }
     };
@@ -46,15 +46,6 @@ const Articles: React.FC = () => {
           className="w-auto m-auto mt-20 rounded-sm"
         />
       </FadeInSection>
-      <h1 className="text-3xl font-bold mb-4">Our Articles</h1>
-      <motion.img
-        src="https://i.pinimg.com/564x/ab/1b/48/ab1b482180444b34e588bc39c0d0051c.jpg"
-        alt="Mental Health Image"
-        className="w-auto m-auto mt-20 rounded-sm"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      />
       <h1 className="text-3xl font-bold mb-4 text-blue-700">Our Articles</h1>
       <input
         type="text"
@@ -71,15 +62,20 @@ const Articles: React.FC = () => {
           {filteredArticles.length > 0 ? (
             filteredArticles.map(article => (
               <FadeInSection key={article._id}>
-                <li className="bg-white rounded-md shadow-md p-4">
+                <motion.li
+                  className="bg-white rounded-md shadow-md p-4 hover:shadow-lg transition-shadow duration-200"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <Link
                     to={`/articles/${article._id}`}
                     className="text-2xl font-bold text-blue-600 hover:underline"
                   >
                     {article.title}
                   </Link>
-                  <p className="text-gray-700">{article.introduction}</p>
-                </li>
+                  <p className="text-gray-700 mt-2">{article.introduction}</p>
+                </motion.li>
               </FadeInSection>
             ))
           ) : (
@@ -95,36 +91,6 @@ const Articles: React.FC = () => {
           Write an Article
         </Link>
       )}
-      <ul className="space-y-4">
-        {filteredArticles.length > 0 ? (
-          filteredArticles.map(article => (
-            <FadeInSection key={article._id}>
-              <motion.li
-                className="bg-teal-200 rounded-md shadow-md p-4 hover:shadow-lg transition-shadow duration-200"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Link
-                  to={`/articles/${article._id}`}
-                  className="text-2xl font-bold text-blue-600 hover:underline"
-                >
-                  {article.title}
-                </Link>
-                <p className="text-gray-700 mt-2">{article.introduction}</p>
-              </motion.li>
-            </FadeInSection>
-          ))
-        ) : (
-          <li className="text-center text-gray-500">No articles found</li>
-        )}
-      </ul>
-      <Link
-        to="/articles/new"
-        className="block mt-4 text-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
-      >
-        Write an Article
-      </Link>
       <BackToTopButton />
     </div>
   );
