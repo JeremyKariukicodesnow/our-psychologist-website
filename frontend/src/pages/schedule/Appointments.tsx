@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../../constants/url';
 
 interface Appointment {
   _id: string;
@@ -16,7 +17,7 @@ const AppointmentsPage: React.FC = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/schedule/appointments');
+        const response = await fetch(`${BASE_URL}/api/schedule/appointments`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
