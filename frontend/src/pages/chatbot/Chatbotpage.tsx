@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import { FaRegComments, FaArrowUp } from 'react-icons/fa';
 
 interface Conversation {
@@ -11,6 +12,7 @@ interface Message {
   id: number;
   text: string;
   timestamp: Date;
+  bot?: boolean;
 }
 
 const ChatbotPage: React.FC = () => {
@@ -22,17 +24,34 @@ const ChatbotPage: React.FC = () => {
   const [currentConversation, setCurrentConversation] = useState<Conversation | null>(null);
   const [message, setMessage] = useState<string>('');
   const [chatHistory, setChatHistory] = useState<Message[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (message.trim()) {
-      const newMessage: Message = {
+      const userMessage: Message = {
         id: chatHistory.length + 1,
         text: message,
         timestamp: new Date(),
+        bot: false,
       };
-      setChatHistory([...chatHistory, newMessage]);
+      setChatHistory([...chatHistory, userMessage]);
       setMessage('');
+      setError(null);
+
+      try {
+        const response = await axios.post('http://localhost:4000/api/chat/chat', { message: userMessage.text });
+        const botMessage: Message = {
+          id: chatHistory.length + 2,
+          text: response.data.response,
+          timestamp: new Date(),
+          bot: true,
+        };
+        setChatHistory((prevMessages) => [...prevMessages, botMessage]);
+      } catch (error) {
+        console.error("Error sending message to chatbot:", error);
+        setError("Sorry, something went wrong. Please try again later.");
+      }
     }
   };
 
@@ -70,8 +89,8 @@ const ChatbotPage: React.FC = () => {
         >
           <div className="flex flex-col space-y-2 text-lg">
             {chatHistory.map((msg) => (
-              <div key={msg.id} className="flex flex-col items-end mb-2">
-                <p className="bg-gray-200 p-2 rounded">{msg.text}</p>
+              <div key={msg.id} className={`flex flex-col ${msg.bot ? 'items-start' : 'items-end'} mb-2`}>
+                <p className={`p-2 rounded ${msg.bot ? 'bg-blue-200' : 'bg-gray-200'}`}>{msg.text}</p>
                 <p className="text-xs text-gray-500">{msg.timestamp.toLocaleTimeString()}</p>
               </div>
             ))}
@@ -80,6 +99,7 @@ const ChatbotPage: React.FC = () => {
             )}
           </div>
         </div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <div className="mt-auto flex items-center">
           <textarea
             className="flex-grow p-2 border border-gray-300 rounded-l-lg shadow-md resize-none text-lg"
@@ -100,10 +120,6 @@ const ChatbotPage: React.FC = () => {
       </main>
     </div>
   );
-}
+};
 
 export default ChatbotPage;
-
-
-
-

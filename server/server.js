@@ -8,6 +8,7 @@ const articleRouter = require('./routes/articles');
 const userRouter = require('./routes/getUser');  // Assuming 'getUser' is the correct name
 const categoriesRouter = require('./routes/categories');
 const scheduleRouter = require('./routes/schedule');
+const chatRoutes = require('./routes/chat');  // Import the chat routes
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use('/api/articles', articleRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/psychology', userRouter);  // Ensure route prefix consistency
 app.use('/api/schedule', scheduleRouter);  // Ensure route prefix consistency
+app.use('/api/chat', chatRoutes);  // Add the chatbot route
 
 // Error handling middleware
 app.use((err, req, res, next) => {
