@@ -2,7 +2,7 @@
 export const testimonials = [
     {
         id: 1,
-        text: "This app has been a lifesaver for me. The services are top-notch and the support is incredible!",
+        text: "This website has been a lifesaver for me. The services are top-notch and the support is incredible!",
         author: "Prudence Ngigi"
     },
     {

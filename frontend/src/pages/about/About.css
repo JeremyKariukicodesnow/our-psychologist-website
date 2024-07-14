@@ -40,7 +40,7 @@
     .hero-img {
       order: -1; /* Move image to the top */
       width: 100%;
-      margin: 0 0 20px 0;
+      margin: 5rem 0 20px 0;
     }
   
     .about-content {
