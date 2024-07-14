@@ -101,7 +101,7 @@ const Login: React.FC = () => {
       />
       <button type="submit">Login</button>
       <div>
-        <p>Don't have an account...</p>
+        <p>Don't have an account....</p>
         <Link to="/register">Register</Link>
       </div>
     </form>
