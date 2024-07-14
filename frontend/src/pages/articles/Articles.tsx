@@ -10,6 +10,7 @@ import { BASE_URL } from '../../constants/url';
 const Articles: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true); // Add loading state
   const [error, setError] = useState<string | null>(null);
   const { isPsychologist } = useUser();
 
@@ -24,6 +25,8 @@ const Articles: React.FC = () => {
         setArticles(data);
       } catch (err: any) {
         setError(err.message);
+      } finally {
+        setLoading(false); // Set loading to false after fetching is complete
       }
     };
 
@@ -56,7 +59,15 @@ const Articles: React.FC = () => {
         className="mb-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
         aria-label="Search articles by title"
       />
-      {error ? (
+      {loading ? (
+        <div className="flex justify-center items-center mb-4">
+          <div className="loading-dots flex space-x-2">
+            <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></div>
+            <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce delay-150"></div>
+            <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce delay-300"></div>
+          </div>
+        </div>
+      ) : error ? (
         <div className="text-red-500 text-center">{error}</div>
       ) : (
         <ul className="space-y-4">
