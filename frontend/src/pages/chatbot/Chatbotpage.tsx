@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { FaRegComments, FaArrowUp } from 'react-icons/fa';
+import { FaRegComments, FaArrowUp, FaBars } from 'react-icons/fa';
 import { BASE_URL } from '../../constants/url';
 
 interface Conversation {
@@ -27,6 +27,7 @@ const ChatbotPage: React.FC = () => {
   const [chatHistory, setChatHistory] = useState<Message[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [showSidebar, setShowSidebar] = useState<boolean>(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const handleSend = async () => {
@@ -81,7 +82,7 @@ const ChatbotPage: React.FC = () => {
 
   return (
     <div className="flex h-screen font-poppins bg-gray-100" role="main">
-      <aside className="hidden md:block md:w-1/4 lg:w-1/5 bg-green-300 border-r border-gray-300 p-4" style={{ backgroundColor: '#94FBAB' }} aria-label="Recent Activity">
+      <aside className={`md:block md:w-1/4 lg:w-1/5 bg-green-300 border-r border-gray-300 p-4 transform ${showSidebar ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out md:relative md:translate-x-0 fixed z-40 md:z-auto top-0 left-0 h-full`} style={{ backgroundColor: '#94FBAB' }} aria-label="Recent Activity">
         <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
         <ul>
           {conversations.map(conversation => (
@@ -102,7 +103,7 @@ const ChatbotPage: React.FC = () => {
           onClick={handleNewChat}
           aria-label="Start a new chat"
         >
-          New Chat.
+          New Chat
         </button>
       </aside>
       <main className="flex-1 p-4 flex flex-col">
@@ -141,7 +142,7 @@ const ChatbotPage: React.FC = () => {
             placeholder="Type your message here..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
             aria-label="Type your message here"
           />
           <button
@@ -153,14 +154,15 @@ const ChatbotPage: React.FC = () => {
           </button>
         </div>
       </main>
-      {/* Floating button for small screens */}
+      {/* Toggle button for small screens */}
       <button
-        className="md:hidden fixed top-4 left-4 bg-blue-500 text-white p-3 rounded-full shadow-md hover:bg-blue-600 transition"
-        onClick={handleNewChat}
-        aria-label="Start a new chat"
+        className="md:hidden fixed top-8 left-0 bg-blue-300 text-white p-3 rounded-full shadow-md hover:bg-blue-600 transition z-50"
+        onClick={() => setShowSidebar(!showSidebar)}
+        aria-label="Toggle recent activity"
       >
-        New Chat
+        <FaBars />
       </button>
+      {showSidebar && <div className="fixed inset-0 bg-black opacity-50 z-30 md:hidden" onClick={() => setShowSidebar(false)} aria-hidden="true"></div>}
     </div>
   );
 };
