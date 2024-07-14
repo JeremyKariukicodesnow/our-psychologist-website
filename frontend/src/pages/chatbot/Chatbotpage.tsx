@@ -102,7 +102,7 @@ const ChatbotPage: React.FC = () => {
           onClick={handleNewChat}
           aria-label="Start a new chat"
         >
-          New Chat
+          New Chat.
         </button>
       </aside>
       <main className="flex-1 p-4 flex flex-col">

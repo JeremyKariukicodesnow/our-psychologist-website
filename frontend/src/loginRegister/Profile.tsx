@@ -136,7 +136,7 @@ const Profile: React.FC = () => {
                 />
               )}
               <button onClick={handleUpdate} className="button-update">
-                Update
+                Update.
               </button>
               <button onClick={() => setIsEditing(false)} className="button-cancel">
                 Cancel

@@ -62,7 +62,7 @@ const SchedulePage: React.FC = () => {
             onClick={navigateToAppointments}
             className="bg-purple-300 text-black rounded-full w-44 h-44 flex justify-center items-center text-center hover:bg-purple-400 transition"
           >
-            Check for scheduled meetings
+            Check for your scheduled meetings
           </button>
         </div>
         <div className="p-8 flex flex-col items-center w-full">
