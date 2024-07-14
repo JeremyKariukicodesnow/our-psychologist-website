@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
+import { BASE_URL } from '../../constants/url';
 
 const ArticleWrite: React.FC = () => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const ArticleWrite: React.FC = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:4000/api/articles/articles', {
+      const response = await fetch(`${BASE_URL}/api/articles/articles`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +71,7 @@ const ArticleWrite: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && <p className="text-red-500 text-center">{error}</p>}
         <div>
-          <label className="block text-lg font-semibold text-gray-800">Title</label>
+          <label className="block mt-16 text-lg font-semibold text-gray-800">Title</label>
           <input
             name="title"
             placeholder="Enter the title"

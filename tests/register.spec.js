@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from 'playwright/test'
 
 test('User can register successfully', async ({ page }) => {
     await page.goto('http://localhost:3000/#/register')
@@ -14,7 +14,7 @@ test('User can register successfully', async ({ page }) => {
     await page.click('button[type=submit]')
 
     // wait for navigation
-    await page.waitForNavigation();
+    await page.waitForURL();
 
 
     // Assert that user is redirected to the home page or another expected page after registration

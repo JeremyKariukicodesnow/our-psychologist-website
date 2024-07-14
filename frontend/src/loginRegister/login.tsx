@@ -4,6 +4,7 @@ import { useUser } from '../contexts/userContext'; // Make sure the import path 
 import { Link, useNavigate } from 'react-router-dom';
 import  {jwtDecode, JwtPayload } from 'jwt-decode'; // Corrected import statement
 import './Auth.css';
+import { BASE_URL } from '../constants/url';
 
 interface LoginFormData {
   email: string;
@@ -44,7 +45,7 @@ const Login: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/login', formData);
+      const response = await axios.post(`${BASE_URL}/api/auth/login`, formData);
       const { token } = response.data;
       const decoded = jwtDecode<DecodedJwtPayload>(token);
       const userPayload = {

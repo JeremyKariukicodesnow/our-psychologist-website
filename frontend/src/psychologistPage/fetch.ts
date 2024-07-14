@@ -1,7 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import { Psychologist } from './psychologyInterface';
+import { BASE_URL } from '../constants/url';
 
-const API_URL = 'http://localhost:4000/psychology';
+const API_URL = `${BASE_URL}/psychology`;
 
 export const fetchPsychologists = async (): Promise<Psychologist[]> => {
   try {

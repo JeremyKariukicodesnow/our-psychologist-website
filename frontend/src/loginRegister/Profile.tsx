@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useUser } from '../contexts/userContext';
 import { Link } from 'react-router-dom';
 import './Profile.css';
+import { BASE_URL } from '../constants/url';
 
 interface User {
   username: string;
@@ -36,7 +37,7 @@ const Profile: React.FC = () => {
     if (user) {
       const fetchProfile = async () => {
         try {
-          const response = await fetch(`http://localhost:4000/psychology/psychologist/${user.username}`);
+          const response = await fetch(`${BASE_URL}/psychology/psychologist/${user.username}`);
           const data: User = await response.json();
           setProfile(data);
           setFormData({
@@ -46,7 +47,7 @@ const Profile: React.FC = () => {
           });
 
           if (data.role === 'psychiatrist') {
-            const articlesResponse = await fetch(`http://localhost:4000/api/articles/articles/author/${user.username}`);
+            const articlesResponse = await fetch(`${BASE_URL}/api/articles/articles/author/${user.username}`);
             const articlesData: Article[] = await articlesResponse.json();
             setArticles(articlesData);
           }
@@ -75,7 +76,7 @@ const Profile: React.FC = () => {
   const handleUpdate = async () => {
     if (user) {
       try {
-        await fetch(`http://localhost:4000/psychology/psychologist/${user.username}`, {
+        await fetch(`${BASE_URL}/psychology/psychologist/${user.username}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

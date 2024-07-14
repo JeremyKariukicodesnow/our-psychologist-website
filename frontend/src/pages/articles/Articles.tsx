@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import { useUser } from '../../contexts/userContext';
 import { motion } from 'framer-motion';
 import './Article.css';
+import { BASE_URL } from '../../constants/url';
 
 const Articles: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -15,7 +16,7 @@ const Articles: React.FC = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/articles/articles');
+        const response = await fetch(`${BASE_URL}/api/articles/articles`);
         if (!response.ok) {
           throw new Error('Failed to fetch articles');
         }

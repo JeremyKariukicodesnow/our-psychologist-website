@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../constants/url';
 
 const SchedulePage: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string>('');
@@ -22,7 +23,7 @@ const SchedulePage: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:4000/api/schedule/schedule', {
+      const response = await fetch(`${BASE_URL}/api/schedule/schedule`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

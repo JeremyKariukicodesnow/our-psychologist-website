@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import './PsychologistOne.css';
 import { fetchPsychologistByUsername } from '../psychologistPage/fetch'; // Import fetchPsychologistByUsername here
+import { BASE_URL } from '../constants/url';
 
 interface Article {
   _id: string;
@@ -33,7 +34,7 @@ const PsychologistProfile: React.FC = () => {
           setPsychologist(psychologistData);
 
           // Fetch articles by this psychologist
-          const articlesData = await axios.get(`http://localhost:4000/api/articles/articles/author/${username}`);
+          const articlesData = await axios.get(`${BASE_URL}/api/articles/articles/author/${username}`);
           setArticles(articlesData.data);
         }
       } catch (error) {
