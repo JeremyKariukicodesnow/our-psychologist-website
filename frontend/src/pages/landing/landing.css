@@ -1,7 +1,8 @@
 .landing--page {
-    background-color:#A9FFF7;
+    background-color: #A9FFF7;
     font-family: poppins;
-    margin: 0em;
+    margin: 0;
+    padding: 1em;
 }
 
 .header {
@@ -19,7 +20,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: 1em;
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
     flex-direction: column;
     text-align: center;
@@ -34,21 +35,21 @@
 }
 
 .hero--text {
-   font-size: 2em;
-   font-weight: 500;
-   padding: 50px;
+    font-size: 2em;
+    font-weight: 500;
+    padding: 50px;
 }
 
 .service--title {
     font-size: 2em;
     font-weight: 500;
     padding: 20px;
+    text-align: center;
 }
 
 .cards--section {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, auto);
     gap: 3em;
 }
 
@@ -90,6 +91,7 @@
     text-align: right;
 }
 
+/* Larger screens */
 @media (min-width: 1000px) {
     .landing--page {
         padding: 2em;
@@ -106,7 +108,7 @@
     .hero--image {
         width: 50%;
         border: none;
-        border-radius: 1em 1em 0em 0em;
+        border-radius: 1em 0 0 1em;
     }
 
     .hero--text {
@@ -114,8 +116,41 @@
     }
 }
 
-@media only screen and (max-width: 600px) {
+/* Medium screens */
+@media (max-width: 999px) and (min-width: 600px) {
+    .hero--text {
+        font-size: 2.5em; /* Slightly adjust text size for medium screens */
+        padding: 20px;
+    }
+
     .cards--section {
-       grid-template-columns: repeat(1, 1fr);
-     }
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2em; /* Adjust gap for better spacing */
+    }
+
+    .testimonial--card {
+        min-width: 300px; /* Adjust the minimum width for medium screens */
+    }
+}
+
+/* Small screens */
+@media (max-width: 599px) {
+    .hero--text {
+        font-size: 1.5em; /* Adjust text size for smaller screens */
+        padding: 10px;
+    }
+
+    .cards--section {
+        grid-template-columns: repeat(1, 1fr); /* Single column for small screens */
+        gap: 1em; /* Reduce gap for better spacing */
+        padding: 0 1em; /* Add padding for better appearance */
+    }
+
+    .testimonial--card {
+        min-width: 100%; /* Full width for small screens */
+    }
+
+    .testimonial-button button {
+        margin: 0 5px; /* Adjust button margins for smaller screens */
+    }
 }

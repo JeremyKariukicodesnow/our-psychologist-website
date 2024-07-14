@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/userContext';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isLoggedIn, isPsychologist, logout } = useUser();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -42,7 +48,7 @@ const Navbar: React.FC = () => {
                   <Link to="/articles/new" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Write</Link>
                 )}
                 <Link to="/profile" className="px-3 py-2 rounded-md text-sm font-medium" onClick={closeMenu}>Profile</Link>
-                <button onClick={logout} className="px-3 py-2 rounded-md text-sm font-medium">Logout</button>
+                <button onClick={handleLogout} className="px-3 py-2 rounded-md text-sm font-medium">Logout</button>
               </>
             )}
           </div>
@@ -91,7 +97,7 @@ const Navbar: React.FC = () => {
                 <Link to="/articles/new" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Write</Link>
               )}
               <Link to="/profile" className="block px-3 py-2 rounded-md text-base font-medium" onClick={closeMenu}>Profile</Link>
-              <button onClick={logout} className="block px-3 py-2 rounded-md text-base font-medium">Logout</button>
+              <button onClick={handleLogout} className="block px-3 py-2 rounded-md text-base font-medium">Logout</button>
             </>
           )}
         </div>

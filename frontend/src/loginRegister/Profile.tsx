@@ -60,12 +60,6 @@ const Profile: React.FC = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    if (profile && profile.role !== 'psychiatrist') {
-      alert('Users are not visible for privacy reasons.Psychologist amy wait as the page loads');
-    }
-  }, [profile]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
@@ -132,23 +126,19 @@ const Profile: React.FC = () => {
                 onChange={handleChange}
                 className="input-field"
               />
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                className="textarea-field"
-                placeholder="Add a description"
-              />
-              <button
-                onClick={handleUpdate}
-                className="button-update"
-              >
+              {profile?.role === 'psychiatrist' && (
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="textarea-field"
+                  placeholder="Add a description"
+                />
+              )}
+              <button onClick={handleUpdate} className="button-update">
                 Update
               </button>
-              <button
-                onClick={() => setIsEditing(false)}
-                className="button-cancel"
-              >
+              <button onClick={() => setIsEditing(false)} className="button-cancel">
                 Cancel
               </button>
             </>
@@ -160,10 +150,7 @@ const Profile: React.FC = () => {
                 <p className="profile-description">{profile.description}</p>
               )}
               {profile.role === 'psychiatrist' && (
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="button-edit"
-                >
+                <button onClick={() => setIsEditing(true)} className="button-edit">
                   Edit Profile
                 </button>
               )}
@@ -180,10 +167,7 @@ const Profile: React.FC = () => {
             <ul className="article-items">
               {articles.map(article => (
                 <li key={article._id} className="article-item">
-                  <Link
-                    to={`/articles/${article._id}`}
-                    className="article-title"
-                  >
+                  <Link to={`/articles/${article._id}`} className="article-title">
                     {article.title}
                   </Link>
                   <p className="article-introduction">{article.introduction}</p>
@@ -201,9 +185,10 @@ const Profile: React.FC = () => {
           </div>
         )
       ) : (
-        <button onClick={() => alert('Users are not visible for privacy reasons')} className="button-alert">
-          loading for psychologist...users feature in beta version
-        </button>
+        <div className="profile-details">
+          <h1 className="profile-name">{profile?.username}</h1>
+          <p className="profile-email">{profile?.email}</p>
+        </div>
       )}
     </div>
   );

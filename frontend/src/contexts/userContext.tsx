@@ -40,7 +40,6 @@ export const useUser = () => useContext(UserContext);
 
 const decodeToken = (token: string): User => {
   const decoded: DecodedJwtPayload = jwtDecode(token);
-  console.log('Decoded Token:', decoded);
   return {
     username: decoded.user.username,
     email: decoded.user.email,
@@ -53,7 +52,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedUser = decodeToken(token);
-      console.log('Initial Decoded User:', decodedUser);
       return decodedUser;
     }
     return null;
@@ -71,14 +69,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedUser = decodeToken(token);
-      console.log('useEffect Decoded User:', decodedUser);
       setUser(decodedUser);
     }
   }, []);
-
-  console.log('User:', user);
-  console.log('isLoggedIn:', isLoggedIn);
-  console.log('isPsychologist:', isPsychologist);
 
   return (
     <UserContext.Provider value={{ user, setUser, isLoggedIn, isPsychologist, logout }}>

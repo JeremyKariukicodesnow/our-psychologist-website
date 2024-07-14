@@ -25,6 +25,7 @@ const ChatbotPage: React.FC = () => {
   const [currentConversation, setCurrentConversation] = useState<Conversation | null>(null);
   const [message, setMessage] = useState<string>('');
   const [chatHistory, setChatHistory] = useState<Message[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -39,6 +40,7 @@ const ChatbotPage: React.FC = () => {
       setChatHistory([...chatHistory, userMessage]);
       setMessage('');
       setError(null);
+      setLoading(true);
 
       try {
         const response = await axios.post(`${BASE_URL}/api/chat/chat`, { message: userMessage.text });
@@ -52,6 +54,8 @@ const ChatbotPage: React.FC = () => {
       } catch (error) {
         console.error("Error sending message to chatbot:", error);
         setError("Sorry, something went wrong. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -76,7 +80,7 @@ const ChatbotPage: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen font-poppins" role="main">
+    <div className="flex h-screen font-poppins bg-gray-100" role="main">
       <aside className="hidden md:block md:w-1/4 lg:w-1/5 bg-green-300 border-r border-gray-300 p-4" style={{ backgroundColor: '#94FBAB' }} aria-label="Recent Activity">
         <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
         <ul>
@@ -94,7 +98,7 @@ const ChatbotPage: React.FC = () => {
           ))}
         </ul>
         <button
-          className="mt-4 w-full bg-blue-500 text-white p-2 rounded text-lg"
+          className="mt-4 w-full bg-blue-500 text-white p-2 rounded text-lg hover:bg-blue-600 transition"
           onClick={handleNewChat}
           aria-label="Start a new chat"
         >
@@ -111,7 +115,7 @@ const ChatbotPage: React.FC = () => {
           <div className="flex flex-col space-y-2 text-lg">
             {chatHistory.map((msg) => (
               <div key={msg.id} className={`flex flex-col ${msg.bot ? 'items-start' : 'items-end'} mb-2`}>
-                <p className={`p-2 rounded ${msg.bot ? 'bg-blue-200' : 'bg-gray-200'}`}>{msg.text}</p>
+                <p className={`p-2 rounded-lg ${msg.bot ? 'bg-blue-200' : 'bg-gray-200'}`}>{msg.text}</p>
                 <p className="text-xs text-gray-500">{msg.timestamp.toLocaleTimeString()}</p>
               </div>
             ))}
@@ -120,11 +124,20 @@ const ChatbotPage: React.FC = () => {
             )}
           </div>
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {loading && (
+          <div className="flex justify-center items-center mb-4">
+            <div className="loading-dots flex space-x-2">
+              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></div>
+              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce delay-150"></div>
+              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce delay-300"></div>
+            </div>
+          </div>
+        )}
+        {error && <p className="text-red-500 mb-2">{error}</p>}
         <div className="mt-auto flex items-center">
           <textarea
-            className="flex-grow p-2 border border-gray-300 rounded-l-lg shadow-md resize-none text-lg"
-            rows={3} /* Adjusted rows to 3 for slightly larger size */
+            className="flex-grow p-2 border border-gray-300 rounded-l-lg shadow-md resize-none text-lg focus:outline-none focus:border-blue-500"
+            rows={2}
             placeholder="Type your message here..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -133,13 +146,21 @@ const ChatbotPage: React.FC = () => {
           />
           <button
             onClick={handleSend}
-            className="bg-blue-500 text-white p-3 rounded-full shadow-md flex items-center justify-center"
+            className="bg-blue-500 text-white p-3 rounded-full shadow-md flex items-center justify-center hover:bg-blue-600 transition"
             aria-label="Send message"
           >
             <FaArrowUp aria-hidden="true" />
           </button>
         </div>
       </main>
+      {/* Floating button for small screens */}
+      <button
+        className="md:hidden fixed top-4 left-4 bg-blue-500 text-white p-3 rounded-full shadow-md hover:bg-blue-600 transition"
+        onClick={handleNewChat}
+        aria-label="Start a new chat"
+      >
+        New Chat
+      </button>
     </div>
   );
 };
